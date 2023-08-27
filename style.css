@@ -1,6 +1,42 @@
-li {
-    display: inline-block;
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
 }
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#left-items {
+    margin-top: 15px;
+    display: flex;
+    gap: 30px;
+}
+
+#right-items {
+    margin-top: 15px;
+    margin-right: 30px;
+    display: flex;
+    gap: 30px;
+}
+
+.account-action {
+    margin-left: auto;
+    margin-right: 30px;
+    border: solid 2px red;
+    border-radius: 9%;
+}
+
+.account-action :hover {
+    color: white;
+    background-color: red;
+}
+
 
 #choices {
     display: flex;
@@ -8,10 +44,4 @@ li {
     justify-content: center;
     align-items: center;
     gap: 15px;
-}
-
-button {
-    width: 125px;
-    height: 75px;
-    list-style: none;
 }
