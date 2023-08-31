@@ -1,0 +1,30 @@
+#to-login,
+#back-home {
+    border: solid 3px red;
+}
+
+
+#back-home:hover {
+    background: red;
+    color: white;
+}
+
+#to-login:hover {
+    background: red;
+    color: white;
+}
+
+#button-box {
+    gap: 15px;
+    margin-bottom: 100px;
+}
+
+.business-options {
+    border: solid 2px black;
+}
+
+.business-options:hover {
+    color: white;
+    background-color: black;
+
+}
