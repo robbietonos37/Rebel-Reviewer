@@ -63,3 +63,17 @@ nav {
     background-color: black;
 
 }
+
+#carouselExampleControls {
+    display: flex;
+    justify-content: center;
+    margin: 100px;
+    border: solid red 2px;
+}
+
+.carousel-inner {
+    border: solid green 2px;
+    display: f;
+    justify-content: center;
+
+}
