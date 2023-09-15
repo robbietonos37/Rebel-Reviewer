@@ -14,8 +14,8 @@
         <a class="btn btn-lg btn-danger fs-5" href="index.html">Back to HomePage</a>
     </div>
     <section class="vh-100">
-        <div class="container h-100 m-5">
-            <div class="row d-flex h-100">
+        <div class="container m-5">
+            <div class="row d-flex">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                     <div class="card shadow-2-strong" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center">

@@ -67,13 +67,31 @@ nav {
 #carouselExampleControls {
     display: flex;
     justify-content: center;
-    margin: 100px;
+    margin-left: 300px;
+    margin-right: 300px;
+    margin-bottom: 300px;
+    margin-top: 100px;
     border: solid red 2px;
 }
 
 .carousel-inner {
-    border: solid green 2px;
-    display: f;
-    justify-content: center;
+    height: 600px;
+    padding-bottom: 25%;
+    /* this sets carousel aspect ratio (4:1 here) */
+}
 
+.carousel-item {
+    position: absolute !important;
+    /* Bootstrap is insistent */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.carousel-item img {
+    height: 100%;
+    /* Bootstrap handles width already */
+    object-fit: cover;
+    /* or 'contain' if you want stretch instead of crop */
 }
