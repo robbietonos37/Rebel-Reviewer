@@ -21,20 +21,21 @@
                         <div class="card-body p-5 text-center">
 
                             <h3 class="mb-5">Sign in</h3>
+                            <form method="POST" action="login.php" id="authenticate-form">
 
-                            <div class="form-outline mb-4">
-                                <input type="email" id="typeEmail" name="username" class="form-control form-control-lg mb-3" />
-                                <label class="form-label" for="typeEmail">WebID</label>
-                            </div>
+                                <div class="form-outline mb-4">
+                                    <input type="email" id="typeEmail" name="username" class="form-control form-control-lg mb-3" />
+                                    <label class="form-label" for="typeEmail">WebID</label>
+                                </div>
 
-                            <div class="form-outline mb-4">
-                                <input type="password" id="typePassword" name="password" class="form-control form-control-lg mb-3" />
-                                <label class="form-label" for="typePassword">Password</label>
-                            </div>
+                                <div class="form-outline mb-4">
+                                    <input type="password" id="typePassword" name="password" class="form-control form-control-lg mb-3" />
+                                    <label class="form-label" for="typePassword">Password</label>
+                                </div>
 
-                            <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
 
-
+                            </form>
                         </div>
                     </div>
                 </div>

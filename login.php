@@ -1,19 +1,6 @@
 <?php
 session_start();
 
-require_once("/home/");
-if (isset($_POST["username"]) && isset($_POST["password"]) && $_POST["username"] !== "" && $_POST["password"] !== "") {
-    function validate($data)
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-}
-
-$username = validate($_POST['username']);
-
 try {
     // query database to see if user has an account
     $query1 = 'select roleID from Users where webID = ?';

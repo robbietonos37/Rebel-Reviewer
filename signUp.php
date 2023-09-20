@@ -1,8 +1,16 @@
 <?php
+require_once('config.php');
+?>
+
+<?php
 if (isset($_POST['create'])) {
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $email = $_POST['email'];
+
+    $query = "INSERT INTO Users(webID, firstName, lastName, email) VALUES(webID, ?, ?, ?, ?)";
+    $insertStmt = $db->prepare($query);
+    $result = $insertStmt->execute([$webID, $firstName, $lastName, $email]);
 }
 ?>
 
@@ -32,7 +40,7 @@ if (isset($_POST['create'])) {
     <div class="container mb-5">
         <div id="outerFormDiv" class="row align-items-center justify-content-center">
             <div class="col-sm-8 col-lg-14 bg-white rounded">
-                <form method="POST" action="https://turing.cs.olemiss.edu/~retonos/PHP/signUp.php" id="register-form">
+                <form method="POST" action="signUp.php" id="register-form">
                     <div class="form-group">
                         <div id="registration">
                             <div class="form-group mt-5 mb-3 w-50">
@@ -63,7 +71,19 @@ if (isset($_POST['create'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-    <script src="https://turing.cs.olemiss.edu/~group1/JS/register.js"></script>
+    <script type="text/javascript">
+        const submitButton = document.querySelector('#register-form');
+
+
+        submitButton.addEventListener('submit', (e) => {
+            const email = document.querySelector('#emailAddress');
+            const confirmEmail = document.querySelector('#confirmEmail');
+
+            if (email !== confirmEmail) {
+                alert('Email addresses do not match!');
+            }
+        })
+    </script>
 </body>
 
 </html>
