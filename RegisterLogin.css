@@ -1,0 +1,17 @@
+#return-to-homepage {
+    border: solid 2px red;
+}
+
+#return-to-homepage:hover {
+    color: white;
+    background-color: red;
+}
+
+#login-btn {
+    border: solid 2px blue;
+}
+
+#login-btn:hover {
+    color: white;
+    background-color: blue;
+}
