@@ -69,10 +69,12 @@ nav {
     justify-content: center;
     margin-left: 300px;
     margin-right: 300px;
-    margin-bottom: 300px;
+    margin-bottom: 500px;
     margin-top: 100px;
     border: solid red 2px;
 }
+
+
 
 .carousel-inner {
     height: 600px;

@@ -1,10 +1,7 @@
 <?php
 session_start();
 require_once("/home/retonos/public_html/PHP/database.php");
-require_once("/home/group1/public_html/PHP/included_functions.php");
-if (!isset($_SESSION["user"])) {
-    redirect("https://turing.cs.olemiss.edu/~group1/index.html");
-}
+require_once("/home/retonos/public_html/PHP/included_functions.php");
 
 $conn = Database::dbConnect();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

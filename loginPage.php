@@ -20,7 +20,7 @@
                     <div class="card shadow-2-strong" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center">
 
-                            <h3 class="mb-5">Sign in</h3>
+                            <h3 class="mb-5">Sign in Using your Ole Miss WebId and Password</h3>
                             <form method="POST" action="login.php" id="authenticate-form">
 
                                 <div class="form-outline mb-4">
