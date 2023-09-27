@@ -33,14 +33,16 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <div id="all-restaurants">
         <?php
         try {
-            $query = 'SELECT * FROM businessTypes WHERE businessType = Restaurant';
+            $query = 'SELECT * FROM businessDetails bs LEFT JOIN businessTypes bt ON businessType = Restaurant AND bt.businessId = bs.businessId';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
-
+        // 
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $businessId = $row['businessId']
+
             echo "<tr>
             <td>" . $row['businessName'] . "</td>
             <td>" . $row["address"] . "</td>
@@ -49,6 +51,15 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <td><a href='businessInfo.php'>More Info</a></td>
             <td><a href='WriteReview.php'>Write a Review</a></td>
             </tr>";
+
+            echo "
+            <div class='apt border border-secondary d-flex align-items-center flex-column justify-content-center gap-2>
+            <h3>" . $row['businessName'] . "</h3>
+            <span>" . $row['address'] . "</span>
+            <span>" . $row['description'] . "</span>
+            <label> " . $row['overallRating'] . "</label>
+            <a href='business_info.php?businessId=$businessId' class='btn btn-primary view-reviews'>View Business Info</a>
+        </div>";
         }
         ?>
     </div>
