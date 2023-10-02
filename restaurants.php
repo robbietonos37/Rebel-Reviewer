@@ -41,7 +41,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         // 
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $businessId = $row['businessId']
+            $businessId = $row['businessId'];
 
             echo "<tr>
             <td>" . $row['businessName'] . "</td>
@@ -58,7 +58,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <span>" . $row['address'] . "</span>
             <span>" . $row['description'] . "</span>
             <label> " . $row['overallRating'] . "</label>
-            <a href='business_info.php?businessId=$businessId' class='btn btn-primary view-reviews'>View Business Info</a>
+            <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews'>View Business Info</a>
         </div>";
         }
         ?>
