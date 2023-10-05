@@ -33,7 +33,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <div id="all-restaurants">
         <?php
         try {
-            $query = 'SELECT * FROM businessDetails bd LEFT JOIN businessTypes bt ON bt.type = Restaurant AND bt.businessId = bd.businessId';
+            $query = 'SELECT * FROM businessDetails bd LEFT JOIN businessTypes bt ON bt.type = CoffeeShop AND bt.businessId = bd.businessId';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -43,14 +43,14 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
 
-            echo "<tr>
-            <td>" . $row['businessName'] . "</td>
-            <td>" . $row["address"] . "</td>
-            <td>" . $row["description"] . "</td>
+            echo "<div>
+            <span>" . $row['businessName'] . "</span>
+            <span>Location: " . $row["address"] . "</span>
+            <td>Website: " . $row["url"] . "</td>
             <td>" . $row["overallRating"] . "</td>
             <td><a href='businessInfo.php'>More Info</a></td>
             <td><a href='WriteReview.php'>Write a Review</a></td>
-            </tr>";
+            </div>";
 
             echo "
             <div class='apt border border-secondary d-flex align-items-center flex-column justify-content-center gap-2>
@@ -64,6 +64,10 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         ?>
     </div>
 
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 
 </html>
