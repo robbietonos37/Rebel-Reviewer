@@ -1,9 +1,8 @@
 <?php
 session_start();
-require_once("/home/retonos/public_html/PHP/database.php");
-//require_once("/home/retonos/public_html/PHP/included_functions.php");
+require_once("/home/retonos/public_html/connect.php");
 
-$conn = Database::dbConnect();
+$conn = Database::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
 <!DOCTYPE html>
@@ -33,27 +32,18 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <div id="all-restaurants">
         <?php
         try {
-            $query = 'SELECT * FROM businessDetails bd LEFT JOIN businessTypes bt ON bt.type = CoffeeShop AND bt.businessId = bd.businessId';
+            $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Coffeeshop"';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
-        // 
+        
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
 
-            echo "<div>
-            <span>" . $row['businessName'] . "</span>
-            <span>Location: " . $row["address"] . "</span>
-            <td>Website: " . $row["url"] . "</td>
-            <td>" . $row["overallRating"] . "</td>
-            <td><a href='businessInfo.php'>More Info</a></td>
-            <td><a href='WriteReview.php'>Write a Review</a></td>
-            </div>";
-
             echo "
-            <div class='apt border border-secondary d-flex align-items-center flex-column justify-content-center gap-2>
+            <div class='apt border border-secondary d-flex align-items-center flex-column justify-content-center gap-2'>
             <h3>" . $row['businessName'] . "</h3>
             <span>" . $row['address'] . "</span>
             <span>" . $row['description'] . "</span>
