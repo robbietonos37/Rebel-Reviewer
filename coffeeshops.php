@@ -46,7 +46,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $businessId = $row['businessId'];
 
             echo "
-            <div class='apt border border-secondary d-flex align-items-center flex-column justify-content-center gap-2'>
+            <div class='mt-3 mb-3 border border-secondary d-flex align-items-center flex-column justify-content-center gap-2 business-posting'>
             <h3>" . $row['businessName'] . "</h3>
             <span>" . $row['address'] . "</span>
             <span>" . $row['description'] . "</span>
