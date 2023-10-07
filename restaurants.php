@@ -13,7 +13,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+    <link href="style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -37,13 +37,13 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
-        // 
+         
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
 
             echo "
-            <div class='apt border border-secondary d-flex align-items-center flex-column justify-content-center gap-2'>
+            <div class='mt-3 mb-3 border border-secondary d-flex align-items-center flex-column justify-content-center gap-2 business-posting'>
             <h3>" . $row['businessName'] . "</h3>
             <span>" . $row['address'] . "</span>
             <span>" . $row['description'] . "</span>
