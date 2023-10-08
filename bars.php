@@ -45,14 +45,24 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
 
+            if($row['url']  !== ''){
             echo "
             <div class='mb-3 mt-3 apt border border-secondary d-flex align-items-center flex-column justify-content-center gap-2 business-posting'>
             <h3>" . $row['businessName'] . "</h3>
-            <span>" . $row['address'] . "</span>
-            <span>" . $row['description'] . "</span>
-            <label> " . $row['overallRating'] . "</label>
+            <span>Address: " . $row['address'] . "</span>
+            <span class='text-center'>Website: <a href=" . $row['url'] ."target='_blank'>" . $row['url'] . "</a></span>
+            <span> " . $row['overallRating'] . "</span>
             <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews'>View Business Info</a>
         </div>";
+            } else {
+                echo "
+                <div class='mb-3 mt-3 apt border border-secondary d-flex align-items-center flex-column justify-content-center gap-2 business-posting'>
+                <h3>" . $row['businessName'] . "</h3>
+                <span>Address: " . $row['address'] . "</span>
+                <span>Overall Rating: " . $row['overallRating'] . "</span>
+                <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews'>View Business Info</a>
+            </div>"; 
+            }
         }
         ?>
     </div>
