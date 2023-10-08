@@ -45,14 +45,26 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
 
+
+            if($row['url'] !== ''){
             echo "
             <div class='mt-3 mb-3 border border-secondary d-flex align-items-center flex-column justify-content-center gap-2 business-posting'>
             <h3>" . $row['businessName'] . "</h3>
             <span>" . $row['address'] . "</span>
-            <span>" . $row['description'] . "</span>
+            <span>Website: <a href=" . $row['url'] . "target='_blank'>" . $row['url'] . "</a></span>
             <label> " . $row['overallRating'] . "</label>
             <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews'>View Business Info</a>
         </div>";
+            }
+            else {
+             echo "
+            <div class='mt-3 mb-3 border border-secondary d-flex align-items-center flex-column justify-content-center gap-2 business-posting'>
+            <h3>" . $row['businessName'] . "</h3>
+            <span>" . $row['address'] . "</span>
+            <label> " . $row['overallRating'] . "</label>
+            <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews'>View Business Info</a>
+        </div>";
+            }
         }
         ?>
     </div>
