@@ -1,9 +1,10 @@
 <?php
+session_start();
+require_once("/home/retonos/public_html/connect.php");
 $businessId = $_GET['businessId'];
 
-$conn = DataBase::dbConnect();
-
-
+$conn = DataBase::connectDB();
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
 
 <!DOCTYPE html>
@@ -28,9 +29,15 @@ $conn = DataBase::dbConnect();
     <div>
 
         <?php
-        $query = 'SELECT * FROM businessData WHERE businessId = {$businessId}';
-        $statement = $conn->execute($query);
-        while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+        try{
+            $query = "SELECT * FROM businessData WHERE businessId = ?";
+        $statement = $conn->prepare($query);
+        $statement->bindParam(1,$businessId);
+        $statement->execute();
+        } catch(PDOException $e){
+            echo $e->getMessage();
+        }
+        while ($row = $statement->fetch()) {
             echo "
         <div>
         <h3 class='text-center mb-3'>" . $row['businessName'] . "</h3>
