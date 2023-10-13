@@ -47,20 +47,20 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             if($row['url'] !== ''){
             echo "
             <div class='mt-3 mb-3 border border-secondary d-flex align-items-center flex-column justify-content-center gap-2 business-posting'>
-            <h3>" . $row['businessName'] . "</h3>
+            <h3 class='mt-3'>" . $row['businessName'] . "</h3>
             <span>" . $row['address'] . "</span>
-            <span>Website: <a href="  . $row['url'] . " target='_blank'>" . $row['url'] . "</a></span>
+            <span class='text-center'>Website: <a href="  . $row['url'] . " target='_blank'>" . $row['url'] . "</a></span>
             <span>Overall Rating: " . $row['overallRating'] . "</span>
-            <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews'>View Business Info</a>
+            <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Info</a>
         </div>";
             }
             else {
                 echo "
                 <div class='mt-3 mb-3 border border-secondary d-flex align-items-center flex-column justify-content-center gap-2 business-posting'>
-                <h3>" . $row['businessName'] . "</h3>
+                <h3 class='mt-3'>" . $row['businessName'] . "</h3>
                 <span>" . $row['address'] . "</span>
                 <label>Overall Rating: " . $row['overallRating'] . "</label>
-                <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews'>View Business Info</a>
+                <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Info</a>
             </div>";  
             }
         }
