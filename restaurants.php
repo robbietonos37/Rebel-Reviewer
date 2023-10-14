@@ -47,9 +47,9 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             if($row['url'] !== ''){
             echo "
             <div class='mt-3 mb-3 border border-secondary d-flex align-items-center flex-column justify-content-center gap-2 business-posting'>
-            <h3 class='mt-3'>" . $row['businessName'] . "</h3>
+            <h3 class='mt-3'> <a href="  . $row['url'] . " target='_blank'>" . $row['businessName'] . "</a></h3>
             <span>" . $row['address'] . "</span>
-            <span class='text-center'>Website: <a href="  . $row['url'] . " target='_blank'>" . $row['url'] . "</a></span>
+            <span class='text-center'><a href="  . $row['url'] . " target='_blank'>Website</a></span>
             <span>Overall Rating: " . $row['overallRating'] . "</span>
             <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Info</a>
         </div>";
