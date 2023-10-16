@@ -1,21 +1,19 @@
 <?php
-require_once('config.php');
-?>
+session_start();
+require_once("/home/retonos/public_html/connect.php");
 
-<?php
-if (isset($_POST['create'])) {
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $email = $_POST['email'];
-
-    $query = "INSERT INTO Users(webID, firstName, lastName, email) VALUES(webID, ?, ?, ?, ?)";
-    $insertStmt = $db->prepare($query);
-    $result = $insertStmt->execute([$webID, $firstName, $lastName, $email]);
-}
+$conn = Database::connectDB();
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+    <div>
+        <?php
+
+        echo "This is " . $_SESSION['webID'] . " session";
+        ?>
+    </div>
 
 <head>
     <meta charset="UTF-8">
@@ -29,6 +27,7 @@ if (isset($_POST['create'])) {
 <body class="bg-light">
     <nav class="mt-3">
         <ul id="left-items">
+            <li><a class="btn fs-5 site-options" href="index.html">Rebel Reviewer</a></li>
             <li><a class="btn fs-5 site-options" href="howItWorks.html">How does it work?</a></li>
             <li><a class="btn fs-5 site-options" href="something.html">Contact</a></li>
         </ul>
@@ -37,10 +36,33 @@ if (isset($_POST['create'])) {
         </ul>
     </nav>
 
+    <div>
+    <?php
+if (isset($_POST['create'])) {
+    
+    $firstName = $_POST['first-name'];
+    $lastName = $_POST['last-name'];
+    $email = $_POST['emailAddress'];
+
+    $query = "INSERT INTO Users (webId, firstName, lastName, email, admin ) VALUES(?,?,?,?,?)";
+    $insertStmt = $conn->prepare($query);
+    $result = $insertStmt->execute([$_SESSION['webID'], $firstName, $lastName, $email, FALSE]);
+    if($result){
+        echo"Something happened";
+        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/restaurants.php");
+    }
+    else {
+        echo "idk bro";
+        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/bars.php");
+    }
+}
+?>
+    </div>
+
     <div class="container mb-5">
         <div id="outerFormDiv" class="row align-items-center justify-content-center">
             <div class="col-sm-8 col-lg-14 bg-white rounded">
-                <form method="POST" action="signUp.php" id="register-form">
+                <form method="post" action="signUp.php" id="register-form">
                     <div class="form-group">
                         <div id="registration">
                             <div class="form-group mt-5 mb-3 w-50">
@@ -74,13 +96,13 @@ if (isset($_POST['create'])) {
     <script type="text/javascript">
         const submitButton = document.querySelector('#register-form');
 
-
         submitButton.addEventListener('submit', (e) => {
-            const email = document.querySelector('#emailAddress');
-            const confirmEmail = document.querySelector('#confirmEmail');
+            const email = document.querySelector('#emailAddress').value;
+            const confirmEmail = document.querySelector('#confirmEmail').value;
 
             if (email !== confirmEmail) {
                 alert('Email addresses do not match!');
+                e.preventDefault();
             }
         })
     </script>
