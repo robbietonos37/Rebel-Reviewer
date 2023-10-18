@@ -8,12 +8,6 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 <!DOCTYPE html>
 <html lang="en">
-    <div>
-        <?php
-
-        echo "This is " . $_SESSION['webID'] . " session";
-        ?>
-    </div>
 
 <head>
     <meta charset="UTF-8">
@@ -41,12 +35,14 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 if (isset($_POST['create'])) {
     
     $firstName = $_POST['first-name'];
+    echo $firstName. "is retrieved";
     $lastName = $_POST['last-name'];
+    echo $lastName. "is retrieved";
     $email = $_POST['emailAddress'];
 
-    $query = "INSERT INTO Users (webId, firstName, lastName, email, admin ) VALUES(?,?,?,?,?)";
+    $query = "INSERT INTO Users (webId, firstName, lastName, email, isAdmin) VALUES(?,?,?,?,?)";
     $insertStmt = $conn->prepare($query);
-    $result = $insertStmt->execute([$_SESSION['webID'], $firstName, $lastName, $email, FALSE]);
+    $result = $insertStmt->execute([$_SESSION['webID'], $firstName, $lastName, $email, 0]);
     if($result){
         echo"Something happened";
         header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/restaurants.php");
