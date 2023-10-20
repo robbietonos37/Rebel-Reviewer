@@ -13,7 +13,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="style.css" rel="stylesheet">
+    <link href="stylesAuth.css" rel="stylesheet">
 </head>
 
 <body>
@@ -26,8 +26,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <li><a class="btn fs-5 site-options" href="something.html">Contact</a></li>
         </ul>
         <ul id="right-items">
-            <li><a class="btn btn-lg business-options" href="coffeeshops.php">Coffeeshops</a></li>
-            <li><a class="btn btn-lg business-options" href="bars.php">Bars</a></li>
+            <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
+            <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
         </ul>
     </nav>
 
