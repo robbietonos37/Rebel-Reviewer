@@ -58,7 +58,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     <div class='d-flex justify-content-center'>
     <?php
-    echo "this is " .$webId. "and"  .$businessId;
+    //echo "<span>this is " .$webId. "and"  .$businessId "</span>";
     try{
         $query = "SELECT * FROM reviews WHERE webId = '$webId' AND businessId = '$businessId'";
         $statement = $conn->query($query);
@@ -67,7 +67,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo $e->getMessage();
         }
         if($statement->rowCount() == 0){
-            echo "<a class='btn btn-lg btn-danger'>REVIEW ME</a>";
+            echo "<a href='createReview.php' class='btn btn-lg btn-danger'>REVIEW ME</a>";
         }
 
         ?>
