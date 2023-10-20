@@ -29,12 +29,16 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <li><a class="btn btn-lg business-options" href="coffeeshops.php">Coffeeshops</a></li>
             <li><a class="btn btn-lg business-options" href="bars.php">Bars</a></li>
         </ul>
+        <ul id="right-items">
+            <li><a class="btn fs-5 account-action"
+                    href="https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/">Log In</a></li>
+        </ul>
     </nav>
 
     <div id="all-restaurants">
         <?php
         try {
-            $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Restaurant" ORDER BY businessName';
+            $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Restaurant"  ORDER BY businessName';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -51,7 +55,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <span>" . $row['address'] . "</span>
             <span class='text-center'><a href="  . $row['url'] . " target='_blank'>Website</a></span>
             <span>Overall Rating: " . $row['overallRating'] . "</span>
-            <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Info</a>
+            <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
         </div>";
             }
             else {
@@ -60,7 +64,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 <h3 class='mt-3'>" . $row['businessName'] . "</h3>
                 <span>" . $row['address'] . "</span>
                 <label>Overall Rating: " . $row['overallRating'] . "</label>
-                <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Info</a>
+                <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
             </div>";  
             }
         }
