@@ -2,6 +2,7 @@
 session_start();
 require_once("/home/retonos/public_html/connect.php");
 $businessId = $_GET['businessId'];
+$webId = $_SESSION['webId'];
 
 $conn = DataBase::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -50,6 +51,28 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         ";
         }
+
+        ?>
+
+    </div>
+
+    <div class='d-flex justify-content-center'>
+    <?php
+        try{
+        $conn = Database::connectDB();
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $query = "SELECT * FROM reviews WHERE webId = '$webId' AND businessId = '$businessId'";
+        $statement = $conn->execute($query);
+        if($statement){
+            
+        }
+        else{
+            echo "<a class='btn btn-lg btn-danger'>LEAVE A REVIEW</a>"
+        }
+        } catch(PDOException $e){
+            echo $e->getMessage();
+        }
+        
 
         ?>
 
