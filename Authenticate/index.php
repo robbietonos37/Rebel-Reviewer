@@ -1,6 +1,8 @@
 <?php
 $webId = json_encode($_SERVER["uid"]);
+$webId = str_replace("\"", "", $webId);
 session_start();
+$_SESSION['webID'] = $webId;
 require_once("/home/retonos/public_html/connect.php");
 
 $conn = Database::connectDB();
@@ -8,11 +10,18 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $query = "SELECT * FROM Users WHERE webId = :webId";
 $statement = $conn->prepare($query);
 $statement->execute(['webId' => $webId]);
-if($statement->rowCount() > 0){
-    echo 'Robbie EXISTS!!' ;
+$row = $statement->fetch(PDO::FETCH_ASSOC);
+//$row = $statement->fetch(PDO::FETCH_ASSOC);$row = $stmt->fetch(PDO::FETCH_ASSOC)
+if($row && $row['isAdmin'] == 1){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/admin.php");
+    exit;
+}
+else if($statement->rowCount() > 0){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
+    exit;
 }
 else {
-    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signUp.php");
     exit;
 }
 
@@ -26,19 +35,19 @@ print_r($webId);
 ?>
 
 <?php
-session_start();
-require_once("/home/retonos/public_html/connect.php");
+// session_start();
+// require_once("/home/retonos/public_html/connect.php");
 
-$conn = Database::connectDB();
-$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-$query = "SELECT * FROM users WHERE webId = '$webId'";
-$statement = $conn->execute($query);
-if($statement){
-    echo 'Robbie EXISTS!!';
-}
-else {
-    echo "WE HAVE A PHONEY";
-}
+// $conn = Database::connectDB();
+// $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// $query = "SELECT * FROM users WHERE webId = '$webId'";
+// $statement = $conn->execute($query);
+// if($statement){
+//     echo 'Robbie EXISTS!!';
+// }
+// else {
+//     echo "WE HAVE A PHONEY";
+// }
 ?>
 
 <?php

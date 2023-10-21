@@ -20,6 +20,9 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 </head>
 
 <body>
+    <?php
+    echo "This is " .$webId;
+    ?>
     <nav class="mt-3">
         <ul id="left-items">
         <li><a class="btn fs-5 site-options" href="index.html">Rebel Reviewer</a></li>
@@ -67,7 +70,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo $e->getMessage();
         }
         if($statement->rowCount() == 0){
-            echo "<a href='createReview.php' class='btn btn-lg btn-danger'>REVIEW ME</a>";
+            echo "<a href='createReview.php?businessId={$businessId}' class='btn btn-lg btn-danger'>REVIEW ME</a>";
         }
 
         ?>

@@ -1,6 +1,10 @@
 <?php
 session_start();
 require_once("/home/retonos/public_html/connect.php");
+$businessId = $_GET['businessId'];
+$webId = $_SESSION['webID'];
+$todayDate = date("Y-m-d");
+$realBusinessId = $businessId;
 
 $conn = Database::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -16,8 +20,45 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <link href="stylesAuth.css" rel="stylesheet">
 </head>
 
-<body>
 
+<body>
+<?php
+$something = $realBusinessId;
+if(isset($_POST['review'])){
+    $ratingNumber = $_POST['numeric-rating'];
+    $reviewText = $_POST['review-text'];
+    $businessId = $_POST['businessId'];
+    $date = date("Y-m-d");
+    echo "What the fuck";
+    echo "sds" .$ratingNumber;
+    echo "sds" .$reviewText;
+    echo "this is" .$webId;
+    echo "this is" .$todayDate;
+    echo "this is" .$businessId;
+
+    try{
+    $query = "INSERT INTO reviews (webId, businessId, rating, reviewText, date_submitted, approved) VALUES (?,?,?,?,?,?)";
+    $insertStmt = $conn->prepare($query);
+    $result = $insertStmt->execute([$webId, $businessId, $ratingNumber, $reviewText, $date,0]);
+    if($result){
+        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signedInBars.php");
+    }
+    else {
+        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    }
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+    
+
+}
+
+?>
+<?php
+echo "this is" .$webId;
+echo "this is" .$todayDate;
+echo "this is" .$businessId;
+?>
 
     <nav class="mt-3">
         <ul id="left-items">
@@ -32,24 +73,14 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         </ul>
     </nav>
 
-    <div id="all-restaurants">
-        <?php
-        try {
-            $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Restaurant" ORDER BY businessName';
-            $stmt = $conn->query($query);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-        
-        ?>
-    </div>
-
     <div>
         <form method="POST" action="createReview.php">
             <label>Rating 0.0-5.0</label>
-            <input type="number" min="0" max="5" step="0.1" name="numberic-rating" onkeydown="return false">
+            <input type="number" min="0" max="5" step="0.1" name="numeric-rating" onkeydown="return false">
             <label>Please tell us about your experience</label>
             <input type="text" name="review-text" cols="14">
+            <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">
+            <input name="review" type="submit">
 
          </form> 
 
