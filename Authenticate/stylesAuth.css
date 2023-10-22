@@ -108,3 +108,21 @@ table {
     margin-right: auto;
     max-width: 700px;
 }
+
+#approve {
+    border: solid green 2px;
+}
+
+#approve:hover {
+    color: white;
+    background-color: green;
+}
+
+#deny {
+    border: solid red 2px;
+}
+
+#deny:hover {
+    color: white;
+    background-color: red;
+}

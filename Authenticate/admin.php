@@ -37,6 +37,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <td>Rating</td>
     <td>Review Text</td>
     <td>Date Submitted</td>
+    <td>Approve</td>
+    <td>Deny</td>
 </tr>
     <?php
     echo "this is session for webId: " .$webId;
@@ -59,6 +61,8 @@ ORDER BY reviews.date_submitted';
             <td>" . $row['rating'] . "</td>
             <td>" . $row['reviewText'] . "</td>
             <td>" . $row['date_submitted'] . "</td>
+            <td><button id='approve' class='btn btn-sm'>Approve</button></td>
+            <td><button id='deny' class='btn btn-sm'>Deny</button></td>
         </tr>";
         }
 
@@ -77,3 +81,11 @@ ORDER BY reviews.date_submitted';
 </body>
 
 </html>
+
+<script>
+    const approveButton = document.getElementById('approve')
+    approveButton.addEventListener('click', (e) => {
+        alert('APPROVED');
+    })
+
+</script>
