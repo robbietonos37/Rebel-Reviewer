@@ -100,3 +100,11 @@ nav {
     margin-left: 115px;
     margin-right: 115px;
 }
+
+table {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 700px;
+}

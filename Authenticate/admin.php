@@ -30,11 +30,21 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     <div class='text-center'>Unapproved reviews will be here</div>
 
-    <table id="unapproved-reviews">
+    <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered'>
+        <tr>
+    <td>WebId</td>
+    <td>Business Name</td>
+    <td>Rating</td>
+    <td>Review Text</td>
+    <td>Date Submitted</td>
+</tr>
     <?php
     echo "this is session for webId: " .$webId;
     try {
-            $query = 'SELECT * FROM reviews WHERE approved = 0 ORDER BY date_submitted';
+            $query = 'SELECT reviews.*, businessData.businessName
+FROM reviews
+JOIN businessData ON reviews.businessId = businessData.businessId
+ORDER BY reviews.date_submitted';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -44,11 +54,11 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "
             <tr>
+            <td>" . $row['webId'] . "</td>
             <td>" . $row['businessName'] . "</td>
-            <span>" . $row['address'] . "</span>
-            <span class='text-center'><a href="  . $row['url'] . " target='_blank'>Website</a></span>
-            <span>Overall Rating: " . $row['rating'] . "</span>
-            <span>Overall Rating: " . $row['reviewText'] . "</span>
+            <td>" . $row['rating'] . "</td>
+            <td>" . $row['reviewText'] . "</td>
+            <td>" . $row['date_submitted'] . "</td>
         </tr>";
         }
 
