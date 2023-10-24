@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once("/home/retonos/public_html/connect.php");
-
+$webId = $_SESSION['webID'];
 $conn = Database::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
@@ -17,6 +17,9 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 </head>
 
 <body>
+<?php
+    echo "This is " .$webId;
+    ?>
 
 
     <nav class="mt-3">
