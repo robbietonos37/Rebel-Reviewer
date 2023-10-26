@@ -25,6 +25,11 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <li><a class="btn fs-5 site-options" href="howItWorks.html">How does it work?</a></li>
             <li><a class="btn fs-5 site-options" href="something.html">Contact</a></li>
         </ul>
+        <ul id="choices">
+            <li><a class="btn btn-lg business-options" href="restaurants.php">Restaurants</a></li>
+            <li><a class="btn btn-lg business-options" href="bars.php">Bars</a></li>
+            <li><a class="btn btn-lg business-options" href="coffeeshops.php">Coffeeshops</a></li>
+        </ul>
         <ul id="right-items">
             <li><a class="btn fs-5 account-action" href="loginPage.php">Log In</a></li>
         </ul>
@@ -45,9 +50,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         <div class='d-flex align-items-center flex-column justify-content-center gap-2 mb-3'>
         <h3 class='text-center mb-3'>" . $row['businessName'] . "</h3>
         <span>Address: " . $row['address'] . "</span>
-
         </div>
-
         ";
         }
 

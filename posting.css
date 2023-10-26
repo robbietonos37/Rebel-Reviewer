@@ -27,6 +27,24 @@ nav {
     background-color: blue;
 }
 
+#choices {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    gap: 15px;
+    padding-right: 150px;
+}
+
+.business-options {
+    border: solid 2px black;
+}
+
+.business-options:hover {
+    color: white;
+    background-color: black;
+
+}
+
 #right-items {
     margin-top: 15px;
     margin-right: 30px;
