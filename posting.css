@@ -44,3 +44,11 @@ nav {
     color: white;
     background-color: red;
 }
+
+#review {
+    border: solid 2px black;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 37px;
+    padding-right: 37px;
+}

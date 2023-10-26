@@ -42,7 +42,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         while ($row = $statement->fetch()) {
             echo "
-        <div class='d-flex align-items-center flex-column justify-content-center gap-2'>
+        <div class='d-flex align-items-center flex-column justify-content-center gap-2 mb-3'>
         <h3 class='text-center mb-3'>" . $row['businessName'] . "</h3>
         <span>Address: " . $row['address'] . "</span>
 
@@ -54,7 +54,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         ?>
 
     </div>
-    <div id="reviews">
+    <h2 class='text-center'>Reviews</h2>
+    <div id="reviews" class='d-flex align-items-center justify-content-center'>
         <?php
     try{
         $query = 'SELECT * FROM reviews WHERE businessId = ? AND approved = 1 ORDER BY date_submitted DESC';
@@ -66,11 +67,11 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     while ($row = $statement->fetch()) {
         echo "
-    <div class='d-flex align-items-center flex-column justify-content-center gap-2'>
+    <div id='review' class='d-flex align-items-center flex-column justify-content-center'>
     <h3 class='text-center mb-3'>Rating Value " . $row['rating'] . "</h3>
+    <span>Date: " . $row['date_submitted'] . "</span>
     <span>User: " . $row['webId'] . "</span>
     <p>Review: " . $row['reviewText'] . "</p>
-    <p>Date: " . $row['date_submitted'] . "</p>
 
     </div>
 
