@@ -20,6 +20,28 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 </head>
 
 <body class="bg-light">
+<?php
+if (isset($_POST['approve'])) {
+    
+    $reviewId = $_POST['reviewId'];
+
+    try{
+    $query = 'UPDATE reviews SET approved = 1 WHERE reviewId= ?';
+    $statement = $conn->prepare($query);
+    $statement->bindParam(1,$reviewId);
+    $result = $statement->execute();
+    if($result){
+        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signedInRestaurants.php");
+    }
+    else {
+        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    }
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+
+}
+?>
     <nav class="mt-3">
         <ul id="choices">
             <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
@@ -27,6 +49,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
         </ul>
     </nav>
+
+
 
     <div class='text-center'>Unapproved reviews will be here</div>
 
@@ -45,7 +69,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     try {
             $query = 'SELECT reviews.*, businessData.businessName
 FROM reviews
-JOIN businessData ON reviews.businessId = businessData.businessId
+JOIN businessData ON reviews.businessId = businessData.businessId WHERE reviews.approved = 0
 ORDER BY reviews.date_submitted';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
@@ -55,14 +79,17 @@ ORDER BY reviews.date_submitted';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "
+            <form method='post' action='admin.php'>
             <tr>
             <td>" . $row['webId'] . "</td>
             <td>" . $row['businessName'] . "</td>
             <td>" . $row['rating'] . "</td>
             <td>" . $row['reviewText'] . "</td>
             <td>" . $row['date_submitted'] . "</td>
-            <td><button id='approve' class='btn btn-sm'>Approve</button></td>
+            <input type='hidden' name='reviewId' value=" . $row['reviewId'] . ">
+            <td><button name='approve' class='btn btn-sm approve' type='submit'>Approve</button></td>
             <td><button id='deny' class='btn btn-sm'>Deny</button></td>
+            </form>
         </tr>";
         }
 
@@ -83,9 +110,13 @@ ORDER BY reviews.date_submitted';
 </html>
 
 <script>
-    const approveButton = document.getElementById('approve')
-    approveButton.addEventListener('click', (e) => {
-        alert('APPROVED');
-    })
+    const approveButtons = document.getElementsByClassName('approve');
+    const approveButtonsArray = Array.from(approveButtons);
+    approveButtonsArray.forEach((button) => button.addEventListener('click', (e) => {
+        if(!confirm("Are you SURE you want to approve this review? If so it will be live for everyone to see and will affect the business's rating")){
+            e.preventDefault();
+            alert(button.id);
+        }
+    }))
 
 </script>
