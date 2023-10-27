@@ -54,11 +54,6 @@ if(isset($_POST['review'])){
 }
 
 ?>
-<?php
-echo "this is" .$webId;
-echo "this is" .$todayDate;
-echo "this is" .$businessId;
-?>
 
     <nav class="mt-3">
         <ul id="left-items">
@@ -75,11 +70,11 @@ echo "this is" .$businessId;
 
     <div class='d-flex justify-content-center align-items-center d-column'>
         <form method="POST" action="createReview.php">
-            <div class='d-flex justify-content-center align-items-center d-column'>
+            <div id='review-box'class='d-flex justify-content-center align-items-center flex-column gap-3 p-5'>
                 <label>Rating 0.0-5.0</label>
                 <input type="number" min="0" max="5" step="0.1" name="numeric-rating" onkeydown="return false">
                 <label>Please tell us about your experience</label>
-                <textarea type="textarea" name="review-text" cols="28" rows="11"></textarea>
+                <textarea type="textarea" name="review-text" cols="51" rows="7" class='p-1'></textarea>
                 <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">
                 <input name="review" type="submit">
 
