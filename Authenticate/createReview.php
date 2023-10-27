@@ -41,7 +41,7 @@ if(isset($_POST['review'])){
     $insertStmt = $conn->prepare($query);
     $result = $insertStmt->execute([$webId, $businessId, $ratingNumber, $reviewText, $date,0]);
     if($result){
-        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signedInBars.php");
+        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
     }
     else {
         header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
@@ -73,15 +73,17 @@ echo "this is" .$businessId;
         </ul>
     </nav>
 
-    <div>
+    <div class='d-flex justify-content-center align-items-center d-column'>
         <form method="POST" action="createReview.php">
-            <label>Rating 0.0-5.0</label>
-            <input type="number" min="0" max="5" step="0.1" name="numeric-rating" onkeydown="return false">
-            <label>Please tell us about your experience</label>
-            <input type="text" name="review-text" cols="14">
-            <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">
-            <input name="review" type="submit">
+            <div class='d-flex justify-content-center align-items-center d-column'>
+                <label>Rating 0.0-5.0</label>
+                <input type="number" min="0" max="5" step="0.1" name="numeric-rating" onkeydown="return false">
+                <label>Please tell us about your experience</label>
+                <textarea type="textarea" name="review-text" cols="28" rows="11"></textarea>
+                <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">
+                <input name="review" type="submit">
 
+            </div>
          </form> 
 
     </div>
