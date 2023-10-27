@@ -44,6 +44,26 @@ if (isset($_POST['approve'])) {
     }
 
 }
+if (isset($_POST['deny'])) {
+    
+    $reviewId = $_POST['reviewId'];
+
+    try{
+    $query = 'DELETE FROM reviews WHERE reviewId= ?';
+    $statement = $conn->prepare($query);
+    $statement->bindParam(1,$reviewId);
+    $result = $statement->execute();
+    if($result){
+        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
+    }
+    else {
+        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    }
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+
+}
 ?>
     <nav class="mt-3">
         <ul id="choices">
@@ -91,7 +111,7 @@ ORDER BY reviews.date_submitted';
             <td>" . $row['date_submitted'] . "</td>
             <input type='hidden' name='reviewId' value=" . $row['reviewId'] . ">
             <td><button name='approve' class='btn btn-sm approve' type='submit'>Approve</button></td>
-            <td><button id='deny' class='btn btn-sm'>Deny</button></td>
+            <td><button name='deny' class='btn btn-sm deny' type='submit'>Deny</button></td>
             </form>
         </tr>";
         }
@@ -118,8 +138,16 @@ ORDER BY reviews.date_submitted';
     approveButtonsArray.forEach((button) => button.addEventListener('click', (e) => {
         if(!confirm("Are you SURE you want to approve this review? If so it will be live for everyone to see and will affect the business's rating")){
             e.preventDefault();
-            alert(button.id);
         }
     }))
+
+    const denyButtons = document.getElementsByClassName('deny');
+    const denyButtonsArray = Array.from(denyButtons);
+    denyButtonsArray.forEach((button) => button.addEventListener('click', (e) => {
+        if(!confirm("Are you SURE you want to deny this review? If so it will be deleted FOREVER. PLEASE BE SURE!")){
+            e.preventDefault();
+        }
+    }))
+    
 
 </script>
