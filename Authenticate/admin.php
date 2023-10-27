@@ -2,6 +2,9 @@
 session_start();
 require_once("/home/retonos/public_html/connect.php");
 $webId = $_SESSION['webID'];
+if($webId !== 'retonos'){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+}
 
 $conn = Database::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
