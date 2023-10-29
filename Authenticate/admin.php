@@ -27,22 +27,54 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 if (isset($_POST['approve'])) {
     
     $reviewId = $_POST['reviewId'];
+    $businessId = $_POST['businessId'];
 
     try{
     $query = 'UPDATE reviews SET approved = 1 WHERE reviewId= ?';
     $statement = $conn->prepare($query);
     $statement->bindParam(1,$reviewId);
     $result = $statement->execute();
-    if($result){
-        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signedInRestaurants.php");
-    }
-    else {
-        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
-    }
     } catch(PDOException $e){
         echo $e->getMessage();
     }
 
+
+    try{
+    $query = 'SELECT * FROM reviews WHERE approved = 1 AND businessId= ?';
+    $statement = $conn->prepare($query);
+    $statement->bindParam(1, $businessId, PDO::PARAM_INT);
+    $result = $statement->execute();
+    } catch(PDOException $e){
+        echo $e->getMessage();
+        echo "Query 1 failing.";
+    }
+    $reviewCount = 0;
+    $totalRating = 0;
+    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+           $reviewCount++;
+           $totalRating += $row['rating'];
+        }
+    
+
+    $avgRating = $totalRating / $reviewCount;
+    $roundedAvgRating = round($avgRating, 1);
+
+    try {
+        $query = "UPDATE businessData SET overAllRating = ? WHERE businessId = ?";
+        $statement = $conn->prepare($query);
+        $statement->bindParam(1, $roundedAvgRating);
+        $statement->bindParam(2, $businessId, PDO::PARAM_INT);
+        $result = $statement->execute();
+        
+        if ($result) {
+            header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signedInRestaurants.php");
+        } else {
+            header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+        }
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+        echo "Query 2 failing.";
+    }
 }
 if (isset($_POST['deny'])) {
     
@@ -110,6 +142,7 @@ ORDER BY reviews.date_submitted';
             <td>" . $row['reviewText'] . "</td>
             <td>" . $row['date_submitted'] . "</td>
             <input type='hidden' name='reviewId' value=" . $row['reviewId'] . ">
+            <input type='hidden' name='businessId' value=" . $row['businessId'] . ">
             <td><button name='approve' class='btn btn-sm approve' type='submit'>Approve</button></td>
             <td><button name='deny' class='btn btn-sm deny' type='submit'>Deny</button></td>
             </form>
