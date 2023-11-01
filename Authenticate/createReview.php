@@ -25,16 +25,11 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 <?php
 $something = $realBusinessId;
 if(isset($_POST['review'])){
+    date_default_timezone_set('America/Chicago');
     $ratingNumber = $_POST['numeric-rating'];
     $reviewText = $_POST['review-text'];
     $businessId = $_POST['businessId'];
     $date = date("Y-m-d");
-    echo "What the fuck";
-    echo "sds" .$ratingNumber;
-    echo "sds" .$reviewText;
-    echo "this is" .$webId;
-    echo "this is" .$todayDate;
-    echo "this is" .$businessId;
 
     try{
     $query = "INSERT INTO reviews (webId, businessId, rating, reviewText, date_submitted, approved) VALUES (?,?,?,?,?,?)";
