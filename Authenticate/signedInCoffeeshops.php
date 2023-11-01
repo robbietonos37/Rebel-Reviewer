@@ -2,6 +2,11 @@
 session_start();
 require_once("/home/retonos/public_html/connect.php");
 
+$webId = $_SESSION['webID'];
+if(!isset($webId)){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+}
+
 $conn = Database::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
@@ -21,7 +26,6 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     <nav class="mt-3">
         <ul id="left-items">
-            <li><a class="btn fs-5 site-options" href="index.html">Rebel Reviewer</a></li>
             <li><a class="btn fs-5 site-options" href="howItWorks.html">How does it work?</a></li>
             <li><a class="btn fs-5 site-options" href="something.html">Contact</a></li>
         </ul>
