@@ -36,10 +36,7 @@ if(isset($_POST['review'])){
     $insertStmt = $conn->prepare($query);
     $result = $insertStmt->execute([$webId, $businessId, $ratingNumber, $reviewText, $date,0]);
     if($result){
-        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
-    }
-    else {
-        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/business_info_signedIn.php?businessId=$businessId");
     }
     } catch(PDOException $e){
         echo $e->getMessage();
@@ -69,7 +66,7 @@ if(isset($_POST['review'])){
                 <label>Rating 0.0-5.0</label>
                 <input type="number" min="0" max="5" step="0.1" name="numeric-rating" onkeydown="return false">
                 <label>Please tell us about your experience</label>
-                <textarea type="textarea" name="review-text" cols="51" rows="7" class='p-1'></textarea>
+                <textarea type="textarea" name="review-text" cols="51" rows="7" class='p-1' maxlength="250"></textarea>
                 <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">
                 <input name="review" type="submit">
 
