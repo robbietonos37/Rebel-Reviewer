@@ -102,3 +102,12 @@ nav {
     margin-left: 115px;
     margin-right: 115px;
 }
+
+.view-reviews {
+    border: solid 3px blue;
+}
+
+.view-reviews:hover {
+    color: white;
+    background-color: blue;
+}

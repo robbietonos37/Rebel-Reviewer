@@ -35,6 +35,19 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         </ul>
     </nav>
 
+    <div id="filter-box" class='card-body'>
+        <div class='row d-flex justify-content-center align-items-center'>
+            <div class='col-md-7'>
+                <form action="" method="GET">
+                    <div class='input-group mb-3'>
+                        <input type='text' name='filter' class='form-control' placeholder='Search Restaurants'>
+                        <button type='submit' class='btn btn-lg'>Search</button>
+                    </div>    
+                <form>
+            </div>
+        </div>
+    </div>
+
     <div id="all-restaurants">
         <?php
         try {
@@ -55,7 +68,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <span>" . $row['address'] . "</span>
             <span class='text-center'><a href="  . $row['url'] . " target='_blank'>Website</a></span>
             <span>Overall Rating: " . $row['overallRating'] . "</span>
-            <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
+            <a href='business_info.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
         </div>";
             }
             else {
@@ -64,12 +77,17 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 <h3 class='mt-3'>" . $row['businessName'] . "</h3>
                 <span>" . $row['address'] . "</span>
                 <label>Overall Rating: " . $row['overallRating'] . "</label>
-                <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
+                <a href='business_info.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
             </div>";  
             }
         }
         ?>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 
 </body>
 

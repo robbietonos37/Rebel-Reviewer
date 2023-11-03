@@ -23,7 +23,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         <ul id="left-items">
             <li><a class="btn fs-5 site-options" href="index.html">Rebel Reviewer</a></li>
             <li><a class="btn fs-5 site-options" href="howItWorks.html">How does it work?</a></li>
-            <li><a class="btn fs-5 site-options" href="something.html">Contact</a></li>
+            <li><a class="btn fs-5 site-options" href="contact.html">Contact</a></li>
         </ul>
         <ul id="right-items">
             <li><a class="btn btn-lg business-options" href="restaurants.php">Restaurants</a></li>
@@ -56,7 +56,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <span>Address: " . $row['address'] . "</span>
             <span class='text-center'><a href="  . $row['url'] . " target='_blank'>Website</a></span>
             <span>Overall Rating: " . $row['overallRating'] . "</span>
-            <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
+            <a href='business_info.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
         </div>";
             }
             else {
@@ -65,7 +65,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <h3>" . $row['businessName'] . "</h3>
             <span>Address: " . $row['address'] . "</span>
             <span>Overall Rating: " . $row['overallRating'] . "</span>
-            <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
+            <a href='business_info.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
         </div>";
             }
         }

@@ -54,8 +54,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <h3 class='mt-3'> <a href="  . $row['url'] . " target='_blank'>" . $row['businessName'] . "</a></h3>
             <span>Address: " . $row['address'] . "</span>
             <span class='text-center'><a href="  . $row['url'] . " target='_blank'>Website</a></span>
-            <span> " . $row['overallRating'] . "</span>
-            <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
+            <span>Overall Rating: " . $row['overallRating'] . "</span>
+            <a href='business_info.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
         </div>";
             } else {
                 echo "
@@ -63,7 +63,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 <h3>" . $row['businessName'] . "</h3>
                 <span>Address: " . $row['address'] . "</span>
                 <span>Overall Rating: " . $row['overallRating'] . "</span>
-                <a href='business_info.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
+                <a href='business_info.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
             </div>"; 
             }
         }
