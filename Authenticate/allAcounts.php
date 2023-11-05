@@ -67,13 +67,12 @@ if (isset($_POST['deny'])) {
     <td>WebId</td>
     <td>First Name</td>
     <td>Last Name</td>
-    <td>Review Text</td>
     <td>Email</td>
     <td>Blacklist</td>
 </tr>
     <?php
     try {
-            $query = 'SELECT * FROM users WHERE isAdmin = 0';
+            $query = 'SELECT * FROM Users WHERE isAdmin = 0';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -88,7 +87,7 @@ if (isset($_POST['deny'])) {
             <td>" . $row['firstName'] . "</td>
             <td>" . $row['lastName'] . "</td>
             <td>" . $row['email'] . "</td>
-            <td><button name='deny' class='btn btn-sm deny' type='submit'>Blacklist</button></td>
+            <td><button name='deny' class='btn btn-md deny' type='submit'>Blacklist</button></td>
             </form>
         </tr>";
         }

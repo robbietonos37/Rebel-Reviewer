@@ -104,6 +104,8 @@ if (isset($_POST['deny'])) {
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
 
             <li><a class="btn btn-lg account-action" href="allBusinesses.php">All Businesses</a></li>
+            <li><a class="btn btn-lg account-action" href="allAcounts.php">All Accounts</a></li>
+            <li><a class="btn btn-lg account-action" href="allApprovedReviews.php">All Approved Reviews</a></li>
             <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
 
         </ul>
@@ -146,8 +148,8 @@ ORDER BY reviews.date_submitted';
             <td>" . $row['date_submitted'] . "</td>
             <input type='hidden' name='reviewId' value=" . $row['reviewId'] . ">
             <input type='hidden' name='businessId' value=" . $row['businessId'] . ">
-            <td><button name='approve' class='btn btn-sm approve' type='submit'>Approve</button></td>
-            <td><button name='deny' class='btn btn-sm deny' type='submit'>Deny</button></td>
+            <td><button name='approve' class='btn btn-md approve' type='submit'>Approve</button></td>
+            <td><button name='deny' class='btn btn-md deny' type='submit'>Deny</button></td>
             </form>
         </tr>";
         }

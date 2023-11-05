@@ -131,7 +131,7 @@ ORDER BY reviews.date_submitted';
             <td>" . $row['date_submitted'] . "</td>
             <input type='hidden' name='reviewId' value=" . $row['reviewId'] . ">
             <input type='hidden' name='businessId' value=" . $row['businessId'] . ">
-            <td><button name='deny' class='btn btn-sm deny' type='submit'>Delete</button></td>
+            <td><button name='delete' class='btn btn-md deny' type='submit'>Delete</button></td>
             </form>
         </tr>";
         }
