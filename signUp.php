@@ -38,9 +38,9 @@ if (isset($_POST['create'])) {
     $lastName = $_POST['last-name'];
     $email = $_POST['emailAddress'];
 
-    $query = "INSERT INTO Users (webId, firstName, lastName, email, isAdmin) VALUES(?,?,?,?,?)";
+    $query = "INSERT INTO Users (webId, firstName, lastName, email, isAdmin, isBlacklisted) VALUES(?,?,?,?,?,?)";
     $insertStmt = $conn->prepare($query);
-    $result = $insertStmt->execute([$_SESSION['webID'], $firstName, $lastName, $email, 0]);
+    $result = $insertStmt->execute([$_SESSION['webID'], $firstName, $lastName, $email, 0, 0]);
     if($result){
         header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signedInRestaurants.php");
     }
