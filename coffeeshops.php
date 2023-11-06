@@ -47,6 +47,18 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
+            try {
+                $cuisineQuery = 'SELECT cs.cuisineDesc
+                FROM Cuisine AS cs
+                LEFT JOIN businessCuisines AS bc ON cs.cuisineId = bc.cuisineId
+                WHERE bc.businessId = ?';
+                $cuisineStatement = $conn->prepare($cuisineQuery); 
+                $cuisineStatement->bindParam(1,$businessId);
+                $cuisineStatement->execute();
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+            while($cuisineRow = $cuisineStatement->fetch()){
 
 
             if($row['url'] !== ''){
@@ -56,6 +68,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <span>Address: " . $row['address'] . "</span>
             <span class='text-center'><a href="  . $row['url'] . " target='_blank'>Website</a></span>
             <span>Overall Rating: " . $row['overallRating'] . "</span>
+            <span>Primary Cuisine: " . $cuisineRow['cuisineDesc'] . "</span>
             <a href='business_info.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
         </div>";
             }
@@ -65,9 +78,11 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <h3>" . $row['businessName'] . "</h3>
             <span>Address: " . $row['address'] . "</span>
             <span>Overall Rating: " . $row['overallRating'] . "</span>
+            <span>Primary Cuisine: " . $cuisineRow['cuisineDesc'] . "</span>
             <a href='business_info.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
         </div>";
             }
+        }
         }
         ?>
     </div>
