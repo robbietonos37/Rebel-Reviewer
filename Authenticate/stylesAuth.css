@@ -130,3 +130,14 @@ table {
 #review-box {
     border: solid black 3px;
 }
+
+.account-action {
+    margin-left: auto;
+    margin-right: 30px;
+    border: solid 2px red;
+}
+
+.account-action:hover {
+    color: white;
+    background-color: red;
+}

@@ -1,5 +1,5 @@
 <?php
-session_start(); // Start the session
+session_start(); 
 
 if (isset($_SESSION['webID'])) {
 
@@ -7,7 +7,7 @@ if (isset($_SESSION['webID'])) {
 
     session_destroy();
 
-    header("Location: index.html");
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
     exit(); 
 } else {
     echo "You are not logged in.";

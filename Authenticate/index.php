@@ -4,6 +4,10 @@ $webId = str_replace("\"", "", $webId);
 session_start();
 $_SESSION['webID'] = $webId;
 require_once("/home/retonos/public_html/connect.php");
+// if($webId === 'cwwalter'){
+//     header("Location: https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+//     exit; 
+// }
 
 $conn = Database::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

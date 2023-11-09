@@ -42,6 +42,24 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     <div class='input-group mb-3'>
                         <input type='text' name='filter' class='form-control' placeholder='Search Restaurants'>
                         <button type='submit' class='btn btn-lg'>Search</button>
+                        <div id="myDropdown" class="dropdown-content">
+                        <label>Select a Cuisine</label>
+                        <select name="Cuisine">
+                            <?php
+                            try{
+                            $query = 'SELECT * FROM Cuisine';
+                            $statement = $conn->query($query);
+                            } catch (PDOException $e) {
+                                echo $e->getMessage();
+                            }
+                            while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                                echo "<option value=" . $row['cuisineDesc'] . ">"
+                                . $row['cuisineDesc'] . 
+                                "</option>";
+                            }
+                            ?>
+                            </select>
+                        </div>
                     </div>    
                 <form>
             </div>
