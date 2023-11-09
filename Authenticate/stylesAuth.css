@@ -141,3 +141,16 @@ table {
     color: white;
     background-color: red;
 }
+
+#edit {
+    border: solid 2px navy;
+}
+
+#edit:hover {
+    background-color: navy;
+    color: white;
+}
+
+.edit-form {
+    width: 150px;
+}
