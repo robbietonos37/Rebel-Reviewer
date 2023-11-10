@@ -111,10 +111,6 @@ if (isset($_POST['delete'])) {
         </ul>
     </nav>
 
-
-
-    <div class='text-center'>Unapproved reviews will be here</div>
-
     <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered'>
         <tr>
     <td>Business Name</td>

@@ -25,7 +25,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 <body class="bg-light">
 <?php
 if (isset($_POST['delete'])) {
-    
+    $businessId = $_POST['businessId'];
     $reviewId = $_POST['reviewId'];
 
     try{
@@ -42,26 +42,34 @@ if (isset($_POST['delete'])) {
     } catch(PDOException $e){
         echo $e->getMessage();
     }
+        $reviewCount = 0;
+        $totalRating = 0;
+        $roundedAvgRating = 0;
 
     try{
         $query = 'SELECT * FROM reviews WHERE approved = 1 AND businessId= ?';
         $statement = $conn->prepare($query);
         $statement->bindParam(1, $businessId, PDO::PARAM_INT);
-        $result = $statement->execute();
-        } catch(PDOException $e){
-            echo $e->getMessage();
-            echo "Query 1 failing.";
-        }
-        $reviewCount = 0;
-        $totalRating = 0;
+        //$result = $statement->execute();
+        if (!$statement->execute()) {
+            // Handle execution failure
+            // Log the error or show an appropriate message
+            echo "Query execution failed.";
+        } else {
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
                $reviewCount++;
                $totalRating += $row['rating'];
             }
-        
-    
-        $avgRating = $totalRating / $reviewCount;
-        $roundedAvgRating = round($avgRating, 1);
+            if ($reviewCount > 0) {
+                $avgRating = $totalRating / $reviewCount;
+                $roundedAvgRating = round($avgRating, 1);
+                // Proceed with the update query here or do necessary actions with $roundedAvgRating
+            }
+        }
+        } catch(PDOException $e){
+            echo $e->getMessage();
+            echo "Query 1 failing.";
+        }
     
         try {
             $query = "UPDATE businessData SET overAllRating = ? WHERE businessId = ?";
@@ -71,9 +79,11 @@ if (isset($_POST['delete'])) {
             $result = $statement->execute();
             
             // if ($result) {
-            //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signedInRestaurants.php");
+            //     // Successful update
+            //     echo "Overall rating updated successfully for business with ID: $businessId";
             // } else {
-            //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+            //     // Update failed
+            //     echo "Failed to update overall rating for business with ID: $businessId";
             // }
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -89,6 +99,8 @@ if (isset($_POST['delete'])) {
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
 
             <li><a class="btn btn-lg account-action" href="admin.php">Admin Page</a></li>
+            <li><a class="btn btn-lg account-action" href="allAcounts.php">All Accounts</a></li>
+            <li><a class="btn btn-lg account-action" href="addBusiness.php">Add Business</a></li>
             <li><a class="btn btn-lg account-action" href="allBusinesses.php">All Businesses</a></li>
             <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
 
@@ -122,7 +134,7 @@ ORDER BY reviews.date_submitted';
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "
-            <form method='post' action='admin.php'>
+            <form method='post' action='allApprovedReviews.php'>
             <tr>
             <td>" . $row['webId'] . "</td>
             <td>" . $row['businessName'] . "</td>
