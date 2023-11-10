@@ -97,7 +97,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <div id='review' class='d-flex align-items-center flex-column justify-content-center'>
     <h3 class='text-center mb-3'>Rating Value " . $row['rating'] . "</h3>
     <span>Date: " . $row['date_submitted'] . "</span>
-    <span>User: " . $row['webId'] . "</span>
+    <a href='userReviews.php?webId={$row['webId']}'>User: " . $row['webId'] . "</a>
     <p>Review: " . $row['reviewText'] . "</p>
 
     </div>
