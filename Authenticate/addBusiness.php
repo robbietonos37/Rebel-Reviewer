@@ -5,6 +5,61 @@ $webId = $_SESSION['webID'];
 if($webId !== 'retonos'){
     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
 }
+
+$conn = Database::connectDB();
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+?>
+<?php
+if(isset($_POST['add'])){
+    $businessName = $_POST['business-name'];
+    $url = $_POST['website'];
+    $address = $_POST['address'] . ' Oxford, MS, 38655';
+    $cuisineId = $_POST['cuisine'];
+    $typeList = $_POST['typeList'];
+//     echo $typeList;
+
+// foreach($typeList as $singleType){
+//     echo"<h3>" . $singleType . "</h3>";
+// }
+    try{
+    $query = "INSERT INTO businessData (businessName, address, url, overallRating) VALUES (?,?,?,?)";
+    $insertStmt = $conn->prepare($query);
+    $result = $insertStmt->execute([$businessName, $address, $url, 0]);
+    // if($result){
+    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/addBusiness.php");
+    // }
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+    try{
+        $query = "SELECT * FROM businessData WHERE businessName = ?";
+    $statement = $conn->prepare($query);
+    $statement->bindParam(1,$businessName);
+    $statement->execute();
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+    while ($row = $statement->fetch()) {
+        $businessId = $row['businessId'];
+        try{
+            $query2 = 'INSERT INTO businessCuisines (businessId, cuisineId) VALUES (?, ?)';
+            $insertStatement = $conn->prepare($query2);
+            $result2 = $insertStatement->execute([$businessId,$cuisineId]);
+        } catch(PDOException $e){
+            echo $e->getMessage();
+        }
+    
+    foreach($typeList as $singleType){
+    try{
+        $query3 = 'INSERT INTO businessTypes (businessId, type) VALUES (?, ?)';
+        $insertStatement3 = $conn->prepare($query3);
+        $result3 = $insertStatement3->execute([$businessId,$singleType]);
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+    }
+    }
+ }
 ?>
 
 <!DOCTYPE html>
@@ -29,26 +84,66 @@ if($webId !== 'retonos'){
         </ul>
     </nav>
 
-    <h2>Enter Business Information</h2>
+    <h2 class='text-center'>Enter Business Information</h2>
 
+    <div class="container p-5 d-lg-flex justify-content-center flex-column" id="add-biz-form">
     <form method="POST" action="addBusiness.php">
         <div class="form-outline mb-4">
             <label class="form-label" for="form4Example1">Business Name</label>
-            <input type="text" id="form4Example1" class="form-control" />
+            <input type="text" name="business-name" class="form-control" />
         </div>
 
         <div class="form-outline mb-4">
             <label class="form-label" for="form4Example2">Website</label>
-            <input type="email" id="form4Example2" class="form-control"/>
+            <input type="text" id="form4Example2" class="form-control" name="website"/>
         </div>
 
         <div class="form-outline mb-4">
             <label class="form-label" for="form4Example3">Address</label>
-            <textarea class="form-control" id="form4Example3" rows="3"></textarea>
+            <textarea class="form-control" id="form4Example3" rows="3" name="address"></textarea>
+        </div>
+        <div id="dropdowns">
+            <div class="dropdown form-outline mb-4">
+                <label class="form-label">Choose Primary Cuisine</label>
+                <select class="select" name="cuisine">
+                <?php
+                try{
+                $query = 'SELECT * FROM Cuisine';
+                $statement = $conn->query($query);
+                } catch (PDOException $e) {
+                echo $e->getMessage();
+                }
+                while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                echo "<option value=" . $row['cuisineId'] . ">"
+                 . $row['cuisineDesc'] . 
+                 "</option>";
+                }
+                ?>
+                </select>
+            </div>
+            <div class="dropdown form-outline mb-4">
+            <label class="form-label" for="cuisine">Choose Business Types</label>
+                <select class="form-select" multiple data-mdb-placeholder="Example placeholder" name="typeList[]">
+                <?php
+                try{
+                $query = 'SELECT DISTINCT type FROM businessTypes';
+                $statement = $conn->query($query);
+                } catch (PDOException $e) {
+                echo $e->getMessage();
+                }
+                while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                echo "<option value=" . $row['type'] . ">"
+                 . $row['type'] . 
+                 "</option>";
+                }
+                ?>
+                </select>
+            </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg mb-4">Add Business</button>
+        <button type="submit" class="btn btn-lg mb-4 add-business" name="add">Add Business</button>
     </form>
+    </div>
     
     
 
