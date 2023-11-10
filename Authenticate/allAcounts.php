@@ -24,59 +24,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 <body class="bg-light">
 <?php
-if (isset($_POST['approve'])) {
-    
-    $reviewId = $_POST['reviewId'];
-    $businessId = $_POST['businessId'];
 
-    try{
-    $query = 'UPDATE reviews SET approved = 1 WHERE reviewId= ?';
-    $statement = $conn->prepare($query);
-    $statement->bindParam(1,$reviewId);
-    $result = $statement->execute();
-    } catch(PDOException $e){
-        echo $e->getMessage();
-    }
-
-
-    try{
-    $query = 'SELECT * FROM reviews WHERE approved = 1 AND businessId= ?';
-    $statement = $conn->prepare($query);
-    $statement->bindParam(1, $businessId, PDO::PARAM_INT);
-    $result = $statement->execute();
-    } catch(PDOException $e){
-        echo $e->getMessage();
-        echo "Query 1 failing.";
-    }
-    $reviewCount = 0;
-    $totalRating = 0;
-    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-           $reviewCount++;
-           $totalRating += $row['rating'];
-        }
-    
-
-    $avgRating = $totalRating / $reviewCount;
-    $roundedAvgRating = round($avgRating, 1);
-
-    try {
-        $query = "UPDATE businessData SET overAllRating = ? WHERE businessId = ?";
-        $statement = $conn->prepare($query);
-        $statement->bindParam(1, $roundedAvgRating);
-        $statement->bindParam(2, $businessId, PDO::PARAM_INT);
-        $result = $statement->execute();
-        
-        if ($result) {
-            header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signedInRestaurants.php");
-        } else {
-            header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
-        }
-    } catch (PDOException $e) {
-        echo $e->getMessage();
-        echo "Query 2 failing.";
-    }
-}
-if (isset($_POST['delete'])) {
+if (isset($_POST['deny'])) {
     
     $reviewId = $_POST['reviewId'];
 
@@ -85,12 +34,12 @@ if (isset($_POST['delete'])) {
     $statement = $conn->prepare($query);
     $statement->bindParam(1,$reviewId);
     $result = $statement->execute();
-    if($result){
-        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
-    }
-    else {
-        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
-    }
+    // if($result){
+    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
+    // }
+    // else {
+    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    // }
     } catch(PDOException $e){
         echo $e->getMessage();
     }
@@ -102,6 +51,13 @@ if (isset($_POST['delete'])) {
             <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
             <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
+
+            <li><a class="btn btn-lg account-action" href="admin.php">Admin Page</a></li>
+            <li><a class="btn btn-lg account-action" href="addBusiness.php">Add Business</a></li>
+            <li><a class="btn btn-lg account-action" href="allBusinesses.php">All Businesses</a></li>
+            <li><a class="btn btn-lg account-action" href="allApprovedReviews.php">All Approved Reviews</a></li>
+            <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
+
         </ul>
     </nav>
 
@@ -111,15 +67,15 @@ if (isset($_POST['delete'])) {
 
     <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered'>
         <tr>
-    <td>Business Name</td>
-    <td>Address</td>
-    <td>Delete</td>
-    <td>Edit</td>
+    <td>WebId</td>
+    <td>First Name</td>
+    <td>Last Name</td>
+    <td>Email</td>
+    <td>Blacklist</td>
 </tr>
     <?php
-    echo "this is session for webId: " .$webId;
     try {
-            $query = 'SELECT * FROM businessData';
+            $query = 'SELECT * FROM Users WHERE isAdmin = 0';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -128,19 +84,21 @@ if (isset($_POST['delete'])) {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "
-            <form method='post' action='allBusinesses.php'>
+            <form method='post' action='admin.php'>
             <tr>
-            <td>" . $row['businessName'] . "</td>
-            <td>" . $row['address'] . "</td>
-            <input type='hidden' name='businessId' value=" . $row['businessId'] . ">
-            <td><button name='deny' class='btn btn-md deny' type='submit'>Delete</button></td>
-            <td><a href='editBusiness.php?businessId={$row['businessId']}' class='btn btn-md' id='edit'>Edit</a></td>
+            <td>" . $row['webId'] . "</td>
+            <td>" . $row['firstName'] . "</td>
+            <td>" . $row['lastName'] . "</td>
+            <td>" . $row['email'] . "</td>
+            <td><button name='deny' class='btn btn-md deny' type='submit'>Blacklist</button></td>
             </form>
         </tr>";
         }
 
     ?>
     </table>
+
+    
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>

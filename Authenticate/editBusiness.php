@@ -46,9 +46,9 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     ?>
 
-    <div class='container' id='edit-form'>
-        <div class='row'>
-            <div class='col-md-9 offset-md-3 col-sm-9 ' id='edit-review'>
+    <div class='containter-lg'>
+        <div class='row justify-content-center my-5'>
+            <div class='col-lg-6' id='edit-review'>
                 <form action="editBusiness.php" method="POST">
                     <h3>Edit Business Information</h3>
                     <?php
@@ -70,7 +70,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     }
                     ?>
                     <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">
-                    <button type='submit' name='confirm' class='btn btn-lg'>Complete Edit</button>
+                    <button type='submit' name='confirm' class='btn btn-lg' id='complete-edit'>Complete Edit</button>
                 </form>
             </div>
         </div>

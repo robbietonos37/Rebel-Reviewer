@@ -102,6 +102,12 @@ if (isset($_POST['delete'])) {
             <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
             <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
+
+            <li><a class="btn btn-lg account-action" href="addBusiness.php">Add Business</a></li>
+            <li><a class="btn btn-lg account-action" href="allAcounts.php">All Accounts</a></li>
+            <li><a class="btn btn-lg account-action" href="allApprovedReviews.php">All Approved Reviews</a></li>
+            <li><a class="btn btn-lg account-action" href="admin.php">Admin Page</a></li>
+            <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
         </ul>
     </nav>
 
@@ -134,7 +140,7 @@ if (isset($_POST['delete'])) {
             <td>" . $row['address'] . "</td>
             <input type='hidden' name='businessId' value=" . $row['businessId'] . ">
             <td><button name='deny' class='btn btn-md deny' type='submit'>Delete</button></td>
-            <td><a href='' class='btn btn-md'></a>Edit</td>
+            <td><a href='editBusiness.php?businessId={$row['businessId']}' class='btn btn-md' id='edit'>Edit</a></td>
             </form>
         </tr>";
         }
