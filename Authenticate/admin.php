@@ -102,9 +102,10 @@ if (isset($_POST['deny'])) {
             <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
             <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
+            <li><a class="btn btn-lg account-action" href="admin.php">Admin Page</a></li>
+            <li><a class="btn btn-lg account-action" href="allAcounts.php">All Accounts</a></li>
             <li><a class="btn btn-lg account-action" href="addBusiness.php">Add Business</a></li>
             <li><a class="btn btn-lg account-action" href="allBusinesses.php">All Businesses</a></li>
-            <li><a class="btn btn-lg account-action" href="allAcounts.php">All Accounts</a></li>
             <li><a class="btn btn-lg account-action" href="allApprovedReviews.php">All Approved Reviews</a></li>
             <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
 
@@ -113,9 +114,9 @@ if (isset($_POST['deny'])) {
 
 
 
-    <div class='text-center'>Unapproved reviews will be here</div>
+    <div class='text-center'>Unapproved Reviews</div>
 
-    <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered'>
+    <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered mt-5'>
         <tr>
     <td>WebId</td>
     <td>Business Name</td>

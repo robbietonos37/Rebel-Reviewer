@@ -102,6 +102,7 @@ if (isset($_POST['delete'])) {
             <li><a class="btn btn-lg account-action" href="allAcounts.php">All Accounts</a></li>
             <li><a class="btn btn-lg account-action" href="addBusiness.php">Add Business</a></li>
             <li><a class="btn btn-lg account-action" href="allBusinesses.php">All Businesses</a></li>
+            <li><a class="btn btn-lg account-action" href="allApprovedReviews.php">All Approved Reviews</a></li>
             <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
 
         </ul>

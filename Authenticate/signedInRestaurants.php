@@ -26,7 +26,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     <nav class="mt-3">
         <ul id="left-items">
-            <li><a class="btn fs-5 site-options" href="howItWorks.html">How does it work?</a></li>
+            <li><a class="btn fs-5 site-options" href="signedInHomepage.html">How does it work?</a></li>
             <li><a class="btn fs-5 site-options" href="something.html">Contact</a></li>
         </ul>
         <ul id="right-items">
@@ -41,6 +41,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             ?>
         </ul>
     </nav>
+
+    <h3 class='text-center'>Restaurants In Oxford</h3>
 
     <div id="all-restaurants">
         <?php

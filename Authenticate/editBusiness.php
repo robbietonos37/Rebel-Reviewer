@@ -27,12 +27,12 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
 
-            <li><a class="btn btn-lg account-action" href="allBusinesses.php">All Businesses</a></li>
-            <li><a class="btn btn-lg account-action" href="allAcounts.php">All Accounts</a></li>
-            <li><a class="btn btn-lg account-action" href="allApprovedReviews.php">All Approved Reviews</a></li>
             <li><a class="btn btn-lg account-action" href="admin.php">Admin Page</a></li>
+            <li><a class="btn btn-lg account-action" href="allAcounts.php">All Accounts</a></li>
+            <li><a class="btn btn-lg account-action" href="addBusiness.php">Add Business</a></li>
+            <li><a class="btn btn-lg account-action" href="allBusinesses.php">All Businesses</a></li>
+            <li><a class="btn btn-lg account-action" href="allApprovedReviews.php">All Approved Reviews</a></li>
             <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
-
         </ul>
     </nav>
     <?php
@@ -52,24 +52,98 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 <form action="editBusiness.php" method="POST">
                     <h3>Edit Business Information</h3>
                     <?php
-                    while ($row = $statement->fetch()) {
-                        $address = $row['address'];
+                    while ($businessRow = $statement->fetch()) {
+                        $address = $businessRow['address'];
                     echo "
                     <div class='form-group'>
                     <label for='name'>Business Name</label>
-                    <input type='text' class='form-control' name='businessName' value=" . $row['businessName'] . ">
+                    <input type='text' class='form-control' name='businessName' value=" . $businessRow['businessName'] . ">
                     </div>
                     <div class='form-group'>
                     <label for='name'>Address</label>
-                    <textarea class='form-control' name='address'>". $row['address'] . "</textarea>
+                    <textarea class='form-control' name='address'>". $businessRow['address'] . "</textarea>
                     </div>
                     <div class='form-group'>
                     <label for='website'>Website</label>
-                    <input type='text' class='form-control' name='website' value=" . $row['url'] . ">
+                    <input type='text' class='form-control' name='website' value=" . $businessRow['url'] . ">
                     </div>";
-                    }
+                    
                     ?>
                     <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">
+                    <div id="dropdowns">
+            <div class="dropdown form-outline mb-4">
+                <label class="form-label">Choose Primary Cuisine</label>
+                <select class="select" name="cuisine">
+                <?php
+                try{
+                $query = 'SELECT * FROM Cuisine';
+                $statement = $conn->query($query);
+                } catch (PDOException $e) {
+                echo $e->getMessage();
+                }
+                while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                    try {
+                        $cuisineQuery = 'SELECT businessCuisines.businessId, businessCuisines.cuisineId, Cuisine.cuisineDesc
+                        FROM businessCuisines
+                        JOIN Cuisine ON businessCuisines.cuisineId = Cuisine.cuisineId
+                        WHERE businessCuisines.businessId = ?';
+                        $cuisineStatement = $conn->prepare($cuisineQuery); 
+                        $cuisineStatement->bindParam(1,$businessId);
+                        $cuisineStatement->execute();
+                    } catch (PDOException $e) {
+                        echo $e->getMessage();
+                    }
+                    while($cuisineRow = $cuisineStatement->fetch()){
+                        if($row['cuisineId'] === $cuisineRow['cuisineId']){
+                            echo "<option value=" . $cuisineRow['cuisineId'] . " selected>"
+                             . $cuisineRow['cuisineDesc'] . 
+                            "</option>";
+                        } else{
+                            echo "<option value=" . $row['cuisineId'] . ">"
+                             . $row['cuisineDesc'] . 
+                             "</option>";
+                        }
+                    }
+            }
+            
+                ?>
+                </select>
+            </div>
+            <div class="dropdown form-outline mb-4">
+            <label class="form-label" for="cuisine">Choose Business Types</label>
+                <select class="form-select" multiple data-mdb-placeholder="Example placeholder" name="typeList[]">
+                <?php
+                try{
+                $query = 'SELECT DISTINCT type FROM businessTypes';
+                $statement3 = $conn->query($query);
+                } catch (PDOException $e) {
+                echo $e->getMessage();
+                }
+                while($row = $statement3->fetch(PDO::FETCH_ASSOC)){
+                    try{
+                        $query = 'SELECT * FROM businessTypes WHERE businessId = ?';
+                        $statement4 = $conn->query($query);
+                        $statement4->bindParam(1,$businessId);
+                        $statement4->execute();
+                        } catch (PDOException $e) {
+                        echo $e->getMessage();
+                        }
+                    while($row4 = $statement4->fetch(PDO::FETCH_ASSOC)){
+                        if($row4['type'] === $row['type']){
+                            echo "<option value=" . $row['type'] . " selected>"
+                             . $row['type'] . 
+                             "</option>";
+                        } else {
+                            echo "<option value=" . $row['type'] . ">"
+                             . $row['type'] . 
+                             "</option>";
+                        }
+                }
+            }
+            }
+                ?>
+                </select>
+            </div>
                     <button type='submit' name='confirm' class='btn btn-lg' id='complete-edit'>Complete Edit</button>
                 </form>
             </div>

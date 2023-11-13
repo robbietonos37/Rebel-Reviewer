@@ -27,8 +27,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     <nav class="mt-3">
         <ul id="left-items">
-            <li><a class="btn fs-5 site-options" href="howItWorks.html">How does it work?</a></li>
-            <li><a class="btn fs-5 site-options" href="something.html">Contact</a></li>
+            <li><a class="btn fs-5 site-options" href="howItWorksSignedIn.html">How does it work?</a></li>
+            <li><a class="btn fs-5 site-options" href="contactSignedIn.html">Contact</a></li>
         </ul>
         <ul id="right-items">
             <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
@@ -43,6 +43,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         </ul>
 
     </nav>
+    <h3 class='text-center'>Coffeeshops In Oxford</h3>
 
     <div id="all-restaurants">
         <?php
@@ -68,6 +69,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 echo $e->getMessage();
             }
             while($cuisineRow = $cuisineStatement->fetch()){
+                
 
 
             if($row['url'] !== ''){

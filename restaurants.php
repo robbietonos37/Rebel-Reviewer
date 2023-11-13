@@ -66,6 +66,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         </div>
     </div>
 
+    <h3 class='text-center'>Restaurants In Oxford</h3>
+
     <div id="all-restaurants">
         <?php
         try {
