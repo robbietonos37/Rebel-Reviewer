@@ -70,7 +70,7 @@ if(isset($_POST['review'])){
                 <label>Please tell us about your experience</label>
                 <textarea type="textarea" name="review-text" cols="51" rows="7" class='p-1' maxlength="250"></textarea>
                 <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">
-                <input name="review" type="submit">
+                <input class="btn btn-md site-options"name="review" type="submit">
 
             </div>
          </form> 

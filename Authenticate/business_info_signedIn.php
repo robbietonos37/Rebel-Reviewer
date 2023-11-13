@@ -67,9 +67,11 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <?php
     //echo "<span>this is " .$webId. "and"  .$businessId "</span>";
     try{
-        $query = "SELECT * FROM reviews WHERE webId = '$webId' AND businessId = '$businessId'";
-        $statement = $conn->query($query);
-        
+        $query = "SELECT * FROM reviews WHERE webId = ? AND businessId = ?";
+        $statement = $conn->prepare($query);
+        $statement->bindParam(1,$webId);
+        $statement->bindParam(2,$businessId);
+        $statement->execute();
         } catch(PDOException $e){
             echo $e->getMessage();
         }
