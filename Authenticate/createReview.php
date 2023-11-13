@@ -49,9 +49,9 @@ if(isset($_POST['review'])){
 
     <nav class="mt-3">
         <ul id="left-items">
-            <li><a class="btn fs-5 site-options" href="index.html">Rebel Reviewer</a></li>
-            <li><a class="btn fs-5 site-options" href="howItWorks.html">How does it work?</a></li>
-            <li><a class="btn fs-5 site-options" href="something.html">Contact</a></li>
+            <li><a class="btn fs-5 site-options" href="signedInHomepage.html">Rebel Reviewer</a></li>
+            <li><a class="btn fs-5 site-options" href="howItWorksSignedIn.html">How does it work?</a></li>
+            <li><a class="btn fs-5 site-options" href="contactSignedIn.html">Contact</a></li>
         </ul>
         <ul id="right-items">
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>

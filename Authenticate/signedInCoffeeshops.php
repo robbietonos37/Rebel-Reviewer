@@ -27,6 +27,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     <nav class="mt-3">
         <ul id="left-items">
+            <li><a class="btn fs-5 site-options" href="signedInHomepage.html">Rebel Reviewer</a></li>
             <li><a class="btn fs-5 site-options" href="howItWorksSignedIn.html">How does it work?</a></li>
             <li><a class="btn fs-5 site-options" href="contactSignedIn.html">Contact</a></li>
         </ul>
