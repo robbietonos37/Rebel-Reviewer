@@ -64,7 +64,9 @@ if(isset($_POST['review'])){
         <form method="POST" action="createReview.php">
             <div id='review-box'class='d-flex justify-content-center align-items-center flex-column gap-3 p-5'>
                 <label>Rating 0.0-5.0</label>
-                <input type="number" min="0" max="5" step="0.1" name="numeric-rating" onkeydown="return false">
+                <input type="range" min="0" max="5" step="0.1" name="numeric-rating" oninput='rangeValue.innerText = this.value'>
+                <p id="rangeValue">2.5</p>
+                <!-- <input type="number" min="0" max="5" step="0.1" name="numeric-rating" onkeydown="return false"> -->
                 <label>Please tell us about your experience</label>
                 <textarea type="textarea" name="review-text" cols="51" rows="7" class='p-1' maxlength="250"></textarea>
                 <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">
