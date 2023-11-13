@@ -2,6 +2,11 @@
 session_start();
 require_once("/home/retonos/public_html/connect.php");
 $businessId = $_GET['businessId'];
+
+if(!isset($_SESSION['webID'])){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+}
+
 $webId = $_SESSION['webID'];
 $todayDate = date("Y-m-d");
 $realBusinessId = $businessId;
@@ -19,6 +24,21 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="stylesAuth.css" rel="stylesheet">
 </head>
+<?php 
+try{
+$reviewCheck = 'SELECT * FROM reviews WHERE webId = ? AND businessId = ?';
+$checkStatement = $conn->prepare($reviewCheck);
+$checkStatement->bindParam(1,$webId);
+$checkStatement->bindParam(2,$businessId);
+$checkStatement->execute();
+} catch(PDOException $e){
+    echo $e->getMessage();
+}
+
+if($checkStatement->rowCount() != 0){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/business_info_signedIn.php?businessId={$businessId}");
+}
+?>
 
 
 <body>
@@ -57,6 +77,7 @@ if(isset($_POST['review'])){
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
             <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
             <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
+            <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
         </ul>
     </nav>
 
