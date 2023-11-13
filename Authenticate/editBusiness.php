@@ -11,6 +11,70 @@ $conn = Database::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
 
+<?php
+if(isset($_POST['edit'])){
+    $businessName = $_POST['businessName'];
+    $url = $_POST['website'];
+    $address = $_POST['address'];
+    $cuisineId = $_POST['cuisine'];
+    $typeList = $_POST['typeList'];
+    $businessId = $_POST['businessId'];
+//     echo $typeList;
+
+// foreach($typeList as $singleType){
+//     echo"<h3>" . $singleType . "</h3>";
+// }
+    try{
+    $query = 'UPDATE businessData SET businessName = ?, address = ?, url = ? WHERE businessId = ?';
+    $insertStmt = $conn->prepare($query);
+    $result = $insertStmt->execute([$businessName, $address, $url, $businessId]);
+    // if($result){
+    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/addBusiness.php");
+    // }
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+    try {
+        $deleteQuery1 = 'DELETE FROM businessCuisines WHERE businessId = ?';
+        $deleteStmt1 = $conn->prepare($deleteQuery1);
+        $deleteStmt1->bindParam(1,$businessId);
+        $deleteStmt1->execute();
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+
+    try{
+        $deleteQuery2 = 'DELETE FROM businessTypes WHERE businessId = ?';
+        $deleteStmt2 = $conn->prepare($deleteQuery2);
+        $deleteStmt2->bindParam(1,$businessId);
+        $deleteStmt2->execute();
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+
+    try{
+        $query2 = 'INSERT INTO businessCuisines (businessId, cuisineId) VALUES (?, ?)';
+        $insertStatement2 = $conn->prepare($query2);
+        $result2 = $insertStatement2->execute([$businessId,$cuisineId]);
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+    
+    foreach($typeList as $singleType){
+        try{
+            $query3 = 'INSERT INTO businessTypes (businessId, type) VALUES (?, ?)';
+            $insertStatement3 = $conn->prepare($query3);
+            $result3 = $insertStatement3->execute([$businessId,$singleType]);
+        } catch(PDOException $e){
+        echo $e->getMessage();
+        }
+    }
+    
+ }
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +121,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     echo "
                     <div class='form-group'>
                     <label for='name'>Business Name</label>
-                    <input type='text' class='form-control' name='businessName' value=" . $businessRow['businessName'] . ">
+                    <textarea class='form-control' name='businessName'>" . $businessRow['businessName'] . "</textarea>
                     </div>
                     <div class='form-group'>
                     <label for='name'>Address</label>
@@ -110,8 +174,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 </select>
             </div>
             <div class="dropdown form-outline mb-4">
-            <label class="form-label" for="cuisine">Choose Business Types</label>
-                <select class="form-select" multiple data-mdb-placeholder="Example placeholder" name="typeList[]">
+            <label class="form-label" for="types">Choose Business Types</label>
+                <select class="form-select" multiple name="typeList[]">
                 <?php
                 try{
                 $query = 'SELECT DISTINCT type FROM businessTypes';
@@ -121,8 +185,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 }
                 while($row = $statement3->fetch(PDO::FETCH_ASSOC)){
                     try{
-                        $query = 'SELECT * FROM businessTypes WHERE businessId = ?';
-                        $statement4 = $conn->query($query);
+                        $query2 = 'SELECT * FROM businessTypes WHERE businessId = ?';
+                        $statement4 = $conn->prepare($query2);
                         $statement4->bindParam(1,$businessId);
                         $statement4->execute();
                         } catch (PDOException $e) {
@@ -133,18 +197,19 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             echo "<option value=" . $row['type'] . " selected>"
                              . $row['type'] . 
                              "</option>";
-                        } else {
+                        }
+                        else {
                             echo "<option value=" . $row['type'] . ">"
                              . $row['type'] . 
                              "</option>";
                         }
+                   }
                 }
-            }
             }
                 ?>
                 </select>
             </div>
-                    <button type='submit' name='confirm' class='btn btn-lg' id='complete-edit'>Complete Edit</button>
+                    <button type='submit' name='edit' class='btn btn-lg' id='complete-edit'>Complete Edit</button>
                 </form>
             </div>
         </div>
