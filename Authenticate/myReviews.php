@@ -24,12 +24,17 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     ?>
     <nav class="mt-3">
         <ul id="left-items">
-        <li><a class="btn fs-5 site-options" href="index.html">Rebel Reviewer</a></li>
-            <li><a class="btn fs-5 site-options" href="howItWorks.html">How does it work?</a></li>
-            <li><a class="btn fs-5 site-options" href="something.html">Contact</a></li>
+            <li><a class="btn fs-5 site-options" href="signedInHomepage.html">Rebel Reviewer</a></li>
+            <li><a class="btn fs-5 site-options" href="howItWorksSignedIn.html">How does it work?</a></li>
+            <li><a class="btn fs-5 site-options" href="contactSignedIn.html">Contact</a></li>
+        </ul>
+        <ul id="choices">
+            <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
+            <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
+            <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
         </ul>
         <ul id="right-items">
-            <li><a class="btn fs-5 account-action" href="logout.php">Logout</a></li>
+            <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
         </ul>
     </nav>
     <div>
@@ -39,6 +44,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <td>Rating</td>
     <td>Date Submitted</td>
     <td>Review Text</td>
+    <td>Status</td>
 </tr>
 
         <?php
@@ -59,7 +65,14 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <td>" . $row['businessName'] . "</td>
             <td >" . $row['rating'] . "</td>
             <td>" . $row['date_submitted'] . "</td>
-            <td>" . htmlspecialchars($row['reviewText'], ENT_QUOTES) . "</td>
+            <td>" . htmlspecialchars($row['reviewText'], ENT_QUOTES) . "</td>";
+           if($row['approved'] == 1){
+            echo "<td>Approved!</td>";
+           }
+           else{
+            echo "<td>Pending</td>";
+           }
+            echo "
             </tr>
             ";
         }
