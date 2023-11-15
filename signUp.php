@@ -42,7 +42,7 @@ if (isset($_POST['create'])) {
     $insertStmt = $conn->prepare($query);
     $result = $insertStmt->execute([$_SESSION['webID'], $firstName, $lastName, $email, 0, 0]);
     if($result){
-        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signedInRestaurants.php");
+        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInHomepage.html");
     }
     else {
         header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");

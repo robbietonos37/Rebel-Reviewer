@@ -21,7 +21,7 @@ if($row && $row['isAdmin'] == 1){
     exit;
 }
 else if($statement->rowCount() > 0){
-    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInHomepage.html");    
     exit;
 }
 else {
