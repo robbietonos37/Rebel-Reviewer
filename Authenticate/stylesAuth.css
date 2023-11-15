@@ -154,3 +154,57 @@ table {
 .edit-form {
     width: 150px;
 }
+
+#complete-edit {
+    border: solid 2px navy;
+}
+
+#complete-edit:hover {
+    background-color: navy;
+    color: white;
+}
+
+.add-business {
+    border: solid 2px darkgreen;
+}
+
+.add-business:hover {
+    background-color: darkgreen;
+    color: white;
+}
+
+#add-biz-form {
+    max-width: 500px;
+}
+
+#searcher {
+    border: solid 2px darkgreen;
+}
+
+#searcher:hover {
+    color: white;
+    background-color: darkgreen;
+}
+
+.input-group {
+    gap: 70px;
+    flex-direction: row;
+}
+
+#search-box {
+    gap: 25px;
+    width: 50%;
+}
+
+#filter-box {
+    gap: 25px;
+}
+
+.view-reviews {
+    border: solid 3px blue;
+}
+
+.view-reviews:hover {
+    color: white;
+    background-color: blue;
+}
