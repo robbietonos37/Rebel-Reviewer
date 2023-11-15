@@ -42,17 +42,50 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
             ?>
         </ul>
-
     </nav>
+
+    <div id="filter-box" class='card-body'>
+        <div class='row d-flex justify-content-center' id='filter-section'>
+            <div class='col-md-7'>
+                <form action="signedInCoffeeshops.php" method="POST">
+                    <div class='input-group d-flex mb-3'>
+                        <div id='search-box' class='d-flex flex-row'>
+                            <input type='text' name='restaurantName' class='form-control' placeholder='Search Coffeeshops'>
+                            <button type='submit' class='btn btn-lg' name='search' id='searcher'>Search</button>
+                        </div>
+                    </div>    
+                <form>
+            </div>
+        </div>
+    </div>
+
+    
     <h3 class='text-center'>Coffeeshops In Oxford</h3>
 
     <div id="all-restaurants">
         <?php
-        try {
-            $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Coffeeshop" ORDER BY businessName';
-            $stmt = $conn->query($query);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
+        if(!isset($_POST['search'])  Or $_POST['restaurantName'] === ''){
+            try {
+                $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Coffeeshop" ORDER BY businessName';
+                $stmt = $conn->query($query);
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+        else {
+            try{
+                $restaurantName = $_POST['restaurantName'];
+                $query = 'SELECT * FROM businessData AS bd 
+                LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId AND bt.type = "Coffeeshop" 
+                WHERE bd.businessName LIKE ? 
+                ORDER BY bd.businessName';
+                $stmt = $conn->prepare($query);
+                //$stmt->bindParam(1,  "%'" . $restaurantName . "'%");
+                $stmt->execute(["%" . $restaurantName . "%"]);
+                //$result = $stmt->execute();
+            } catch (PDOException $e) {
+                echo "Error executing the query: " . $e->getMessage();
+            }
         }
         
 
@@ -81,7 +114,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <span class='text-center'><a href="  . $row['url'] . " target='_blank'>Website</a></span>
             <span>Overall Rating: " . $row['overallRating'] . "</span>
             <span>Primary Cuisine: " . $cuisineRow['cuisineDesc'] . "</span>
-            <a href='business_info_signedIn.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
+            <a href='business_info_signedIn.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
         </div>";
             }
             else {
@@ -91,7 +124,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <span>Address: " . $row['address'] . "</span>
             <span>Overall Rating: " . $row['overallRating'] . "</span>
             <span>Primary Cuisine: " . $cuisineRow['cuisineDesc'] . "</span>
-            <a href='business_info_signedIn.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
+            <a href='business_info_signedIn.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
         </div>";
             }
         }
