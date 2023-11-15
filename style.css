@@ -111,3 +111,26 @@ nav {
     color: white;
     background-color: blue;
 }
+
+#searcher {
+    border: solid 2px darkgreen;
+}
+
+#searcher:hover {
+    color: white;
+    background-color: darkgreen;
+}
+
+.input-group {
+    gap: 70px;
+    flex-direction: row;
+}
+
+#search-box {
+    gap: 25px;
+    width: 50%;
+}
+
+#filter-box {
+    gap: 25px;
+}

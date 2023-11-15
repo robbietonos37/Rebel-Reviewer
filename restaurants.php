@@ -36,27 +36,32 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     </nav>
 
     <div id="filter-box" class='card-body'>
-        <div class='row d-flex justify-content-center align-items-center'>
+        <div class='row d-flex justify-content-center' id='filter-section'>
             <div class='col-md-7'>
-                <form action="" method="GET">
-                    <div class='input-group mb-3'>
-                        <input type='text' name='filter' class='form-control' placeholder='Search Restaurants'>
-                        <button type='submit' class='btn btn-lg'>Search</button>
-                        <div id="myDropdown" class="dropdown-content">
-                        <label>Select a Cuisine</label>
-                        <select name="Cuisine">
-                            <?php
-                            try{
-                            $query = 'SELECT * FROM Cuisine';
-                            $statement = $conn->query($query);
-                            } catch (PDOException $e) {
-                                echo $e->getMessage();
-                            }
-                            while($row = $statement->fetch(PDO::FETCH_ASSOC)){
-                                echo "<option value=" . $row['cuisineDesc'] . ">"
-                                . $row['cuisineDesc'] . 
-                                "</option>";
-                            }
+                <form action="restaurants.php" method="POST">
+                    <div class='input-group d-flex mb-3'>
+                        <div id='search-box' class='d-flex flex-row'>
+                            <input type='text' name='restaurantName' class='form-control' placeholder='Search Restaurants'>
+                            <button type='submit' class='btn btn-lg' name='search' id='searcher'>Search</button>
+                        </div>
+                        <div id="myDropdown" class="dropdown-content mt-3">
+                            <label>Select a Cuisine</label>
+                            <select name="Cuisine">
+                                <option value="None" selected>
+                                    None Selected
+                                </option>
+                                <?php
+                                    try{
+                                    $query = 'SELECT * FROM Cuisine';
+                                    $statement = $conn->query($query);
+                                    } catch (PDOException $e) {
+                                    echo $e->getMessage();
+                                    }
+                                    while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+                                        echo "<option value=" . $row['cuisineDesc'] . ">"
+                                        . $row['cuisineDesc'] . 
+                                        "</option>";
+                                    }
                             ?>
                             </select>
                         </div>
@@ -69,14 +74,33 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <h3 class='text-center'>Restaurants In Oxford</h3>
 
     <div id="all-restaurants">
+
         <?php
+        if(!isset($_POST['search'])  Or $_POST['restaurantName'] === ''){
         try {
-            $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Restaurant"  ORDER BY businessName';
+            $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Restaurant" ORDER BY businessName';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
+        }
+        else {
+            try{
+            $restaurantName = $_POST['restaurantName'];
+            $query = 'SELECT * FROM businessData AS bd 
+            LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId AND bt.type = "Restaurant" 
+            WHERE bd.businessName LIKE ? 
+            ORDER BY bd.businessName';
+            $stmt = $conn->prepare($query);
+            //$stmt->bindParam(1,  "%'" . $restaurantName . "'%");
+            $stmt->execute(["%" . $restaurantName . "%"]);
+            //$result = $stmt->execute();
+            } catch (PDOException $e) {
+                echo "Error executing the query: " . $e->getMessage();
+            }
+        } 
          
+
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
