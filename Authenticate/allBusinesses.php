@@ -157,14 +157,6 @@ if (isset($_POST['delete'])) {
 </html>
 
 <script>
-    const approveButtons = document.getElementsByClassName('approve');
-    const approveButtonsArray = Array.from(approveButtons);
-    approveButtonsArray.forEach((button) => button.addEventListener('click', (e) => {
-        if(!confirm("Are you SURE you want to approve this review? If so it will be live for everyone to see and will affect the business's rating")){
-            e.preventDefault();
-        }
-    }))
-
     const denyButtons = document.getElementsByClassName('deny');
     const denyButtonsArray = Array.from(denyButtons);
     denyButtonsArray.forEach((button) => button.addEventListener('click', (e) => {

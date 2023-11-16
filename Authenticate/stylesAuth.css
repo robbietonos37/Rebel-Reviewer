@@ -127,6 +127,16 @@ table {
     background-color: red;
 }
 
+.delete {
+    border: solid red 2px;
+}
+
+.delete:hover {
+    color: white;
+    background-color: red;
+}
+
+
 #review-box {
     border: solid black 3px;
 }
