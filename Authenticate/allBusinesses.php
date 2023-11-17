@@ -24,73 +24,51 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 <body class="bg-light">
 <?php
-if (isset($_POST['approve'])) {
-    
-    $reviewId = $_POST['reviewId'];
-    $businessId = $_POST['businessId'];
-
-    try{
-    $query = 'UPDATE reviews SET approved = 1 WHERE reviewId= ?';
-    $statement = $conn->prepare($query);
-    $statement->bindParam(1,$reviewId);
-    $result = $statement->execute();
-    } catch(PDOException $e){
-        echo $e->getMessage();
-    }
-
-
-    try{
-    $query = 'SELECT * FROM reviews WHERE approved = 1 AND businessId= ?';
-    $statement = $conn->prepare($query);
-    $statement->bindParam(1, $businessId, PDO::PARAM_INT);
-    $result = $statement->execute();
-    } catch(PDOException $e){
-        echo $e->getMessage();
-        echo "Query 1 failing.";
-    }
-    $reviewCount = 0;
-    $totalRating = 0;
-    while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-           $reviewCount++;
-           $totalRating += $row['rating'];
-        }
-    
-
-    $avgRating = $totalRating / $reviewCount;
-    $roundedAvgRating = round($avgRating, 1);
-
-    try {
-        $query = "UPDATE businessData SET overAllRating = ? WHERE businessId = ?";
-        $statement = $conn->prepare($query);
-        $statement->bindParam(1, $roundedAvgRating);
-        $statement->bindParam(2, $businessId, PDO::PARAM_INT);
-        $result = $statement->execute();
-        
-        if ($result) {
-            header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signedInRestaurants.php");
-        } else {
-            header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
-        }
-    } catch (PDOException $e) {
-        echo $e->getMessage();
-        echo "Query 2 failing.";
-    }
-}
 if (isset($_POST['delete'])) {
     
-    $reviewId = $_POST['reviewId'];
+    $businessId = $_POST['businessId'];
+
+    try {
+        $deleteQuery1 = 'DELETE FROM businessCuisines WHERE businessId = ?';
+        $deleteStmt1 = $conn->prepare($deleteQuery1);
+        $deleteStmt1->bindParam(1,$businessId);
+        $deleteStmt1->execute();
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
 
     try{
-    $query = 'DELETE FROM reviews WHERE reviewId= ?';
-    $statement = $conn->prepare($query);
-    $statement->bindParam(1,$reviewId);
-    $result = $statement->execute();
-    if($result){
-        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
+        $deleteQuery2 = 'DELETE FROM businessTypes WHERE businessId = ?';
+        $deleteStmt2 = $conn->prepare($deleteQuery2);
+        $deleteStmt2->bindParam(1,$businessId);
+        $deleteStmt2->execute();
+    } catch(PDOException $e){
+        echo $e->getMessage();
     }
-    else {
-        header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+
+    try{
+        $deleteQuery3 = 'DELETE FROM reviews WHERE businessId = ?';
+        $deleteStmt3 = $conn->prepare($deleteQuery3);
+        $deleteStmt3->bindParam(1,$businessId);
+        $deleteStmt3->execute();
+    } catch(PDOException $e){
+        echo $e->getMessage();
     }
+
+    try{
+        $deleteQuery4 = 'DELETE FROM Favorites WHERE businessId = ?';
+        $deleteStmt4 = $conn->prepare($deleteQuery4);
+        $deleteStmt4->bindParam(1,$businessId);
+        $deleteStmt4->execute();
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+
+    try{
+        $deleteQuery5 = 'DELETE FROM businessData WHERE businessId = ?';
+        $deleteStmt5 = $conn->prepare($deleteQuery5);
+        $deleteStmt5->bindParam(1,$businessId);
+        $deleteStmt5->execute();
     } catch(PDOException $e){
         echo $e->getMessage();
     }
@@ -136,7 +114,7 @@ if (isset($_POST['delete'])) {
             <td>" . $row['businessName'] . "</td>
             <td>" . $row['address'] . "</td>
             <input type='hidden' name='businessId' value=" . $row['businessId'] . ">
-            <td><button name='deny' class='btn btn-md deny' type='submit'>Delete</button></td>
+            <td><button name='delete' class='btn btn-md delete' type='submit'>Delete</button></td>
             <td><a href='editBusiness.php?businessId={$row['businessId']}' class='btn btn-md' id='edit'>Edit</a></td>
             </form>
         </tr>";
@@ -157,10 +135,10 @@ if (isset($_POST['delete'])) {
 </html>
 
 <script>
-    const denyButtons = document.getElementsByClassName('deny');
+    const denyButtons = document.getElementsByClassName('delete');
     const denyButtonsArray = Array.from(denyButtons);
     denyButtonsArray.forEach((button) => button.addEventListener('click', (e) => {
-        if(!confirm("Are you SURE you want to deny this review? If so it will be deleted FOREVER. PLEASE BE SURE!")){
+        if(!confirm("Are you SURE you want to delete this business? If so it will be deleted FOREVER. PLEASE BE SURE!")){
             e.preventDefault();
         }
     }))
