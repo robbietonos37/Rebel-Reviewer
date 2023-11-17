@@ -89,7 +89,7 @@ if(isset($_POST['add'])){
 
     <h2 class='text-center'>Enter Business Information</h2>
 
-    <div class="container p-5 d-lg-flex justify-content-center flex-column" id="add-biz-form">
+    <div class="container p-3 d-lg-flex justify-content-center flex-column" id="add-biz-form">
     <form method="POST" action="addBusiness.php">
         <div class="form-outline mb-4">
             <label class="form-label" for="form4Example1">Business Name</label>
@@ -102,7 +102,7 @@ if(isset($_POST['add'])){
         </div>
 
         <div class="form-outline mb-4">
-            <label class="form-label" for="form4Example3">Address</label>
+            <label class="form-label" for="form4Example3">Address (Only street address. DO NOT include city, state, and zip).</label>
             <textarea class="form-control" id="form4Example3" rows="3" name="address"></textarea>
         </div>
         <div id="dropdowns">

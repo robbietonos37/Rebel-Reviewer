@@ -120,7 +120,7 @@ if (isset($_POST['delete'])) {
     <td>Edit</td>
 </tr>
     <?php
-    echo "this is session for webId: " .$webId;
+    //echo "this is session for webId: " .$webId;
     try {
             $query = 'SELECT * FROM businessData';
             $stmt = $conn->query($query);
