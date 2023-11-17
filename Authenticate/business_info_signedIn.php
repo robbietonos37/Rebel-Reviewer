@@ -76,14 +76,14 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo $e->getMessage();
         }
         if($statement->rowCount() == 0){
-            echo "<a href='createReview.php?businessId={$businessId}' class='btn btn-lg btn-danger'>REVIEW ME</a>";
+            echo "<a href='createReview.php?businessId={$businessId}' id='leave-review' class='btn btn-md mt-3 mb-3'>Review Me</a>";
         }
 
         ?>
 
     </div>
 
-    <h2 class='text-center'>Reviews</h2>
+    <h2 class='text-center mb-3'>Reviews</h2>
     <div id="reviews" class='d-flex align-items-center justify-content-center'>
         <?php
     try{
@@ -96,11 +96,11 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
     while ($row = $statement->fetch()) {
         echo "
-    <div id='review' class='d-flex align-items-center flex-column justify-content-center'>
-    <h3 class='text-center mb-3'>Rating Value " . $row['rating'] . "</h3>
+    <div id='review-box' class='d-flex align-items-center flex-column justify-content-center'>
+    <h3 class='text-center mb-3 mt-1'>Rating Value " . $row['rating'] . "</h3>
     <span>Date: " . $row['date_submitted'] . "</span>
     <a href='userReviews.php?webId={$row['webId']}'>User: " . $row['webId'] . "</a>
-    <p>Review: " . $row['reviewText'] . "</p>
+    <p class='text-center p-3'>" . $row['reviewText'] . "</p>
 
     </div>
 

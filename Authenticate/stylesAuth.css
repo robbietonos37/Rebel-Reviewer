@@ -210,6 +210,15 @@ table {
     gap: 25px;
 }
 
+#leave-review {
+    border: solid 2px red;
+}
+
+#leave-review:hover {
+    background-color: red;
+    color: white;
+}
+
 .view-reviews {
     border: solid 3px blue;
 }
@@ -217,4 +226,16 @@ table {
 .view-reviews:hover {
     color: white;
     background-color: blue;
+}
+
+#review-box {
+    border: solid black 2px;
+    padding: 30px;
+}
+
+.someones-review {
+    border: solid 2px black;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 700px;
 }

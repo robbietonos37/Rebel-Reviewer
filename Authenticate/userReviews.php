@@ -21,18 +21,24 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 <body>
     <?php
-    echo "This is " .$pageWebId. "'s page";
+    //echo "This is " .$pageWebId. "'s page";
     ?>
     <nav class="mt-3">
         <ul id="left-items">
-        <li><a class="btn fs-5 site-options" href="index.html">Rebel Reviewer</a></li>
-            <li><a class="btn fs-5 site-options" href="howItWorks.html">How does it work?</a></li>
-            <li><a class="btn fs-5 site-options" href="something.html">Contact</a></li>
+        <li><a class="btn fs-5 site-options" href="signedInHomepage.html">Rebel Reviewer</a></li>
+            <li><a class="btn fs-5 site-options" href="howItWorksSignedIn.html">How does it work?</a></li>
+            <li><a class="btn fs-5 site-options" href="contactSignedIn.html">Contact</a></li>
+        </ul>
+        <ul id="choices">
+            <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
+            <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
+            <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
         </ul>
         <ul id="right-items">
             <li><a class="btn fs-5 account-action" href="logout.php">Logout</a></li>
         </ul>
     </nav>
+    <h2 class='text-center mb-3 mt-3'> <?php echo $webId . "'s Reviews"?> </h2>
     <div>
 
         <?php
@@ -50,11 +56,11 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         while ($row = $statement->fetch()) {
             echo "
-            <div id='review' class='d-flex align-items-center flex-column justify-content-center'>
+            <div class='d-flex align-items-center flex-column justify-content-center someones-review'>
             <h2 class='text-center mb-3'>Business: " . $row['businessName'] . "</h2>
             <h3 class='text-center mb-3'>Rating Value: " . $row['rating'] . "</h3>
             <span>Date: " . $row['date_submitted'] . "</span>
-            <p>Review: " . $row['reviewText'] . "</p>
+            <p class='text-center'>Review: " . $row['reviewText'] . "</p>
         
             </div>
         

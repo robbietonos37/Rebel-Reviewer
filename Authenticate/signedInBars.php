@@ -23,7 +23,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 <body>
 <?php
-    echo "This is " .$webId;
+    //echo "This is " .$webId;
     ?>
 
 
@@ -83,7 +83,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <span class='text-center'><a href="  . $row['url'] . " target='_blank'>Website</a></span>
             <span> " . $row['overallRating'] . "</span>
             <span>Primary Cuisine: " . $cuisineRow['cuisineDesc'] . "</span>
-            <a href='business_info_signedIn.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
+            <a href='business_info_signedIn.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
         </div>";
             } else {
                 echo "
@@ -92,7 +92,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 <span>Address: " . $row['address'] . "</span>
                 <span>Overall Rating: " . $row['overallRating'] . "</span>
                 <span>Primary Cuisine: " . $cuisineRow['cuisineDesc'] . "</span>
-                <a href='business_info_signedIn.php?businessId={$businessId}' class='btn btn-primary view-reviews mb-3'>View Business Reviews</a>
+                <a href='business_info_signedIn.php?businessId={$businessId}' class='btn view-reviews mb-3'>View Business Reviews</a>
             </div>"; 
             }
         }
