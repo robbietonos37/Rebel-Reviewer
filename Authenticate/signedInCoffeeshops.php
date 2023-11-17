@@ -34,6 +34,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         <ul id="right-items">
             <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
             <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
+            <li><a class="btn btn-lg account-action" href="myReviews.php">My Reviews</a></li>
             <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
             <?php if($webId === 'retonos'){
                 echo "
@@ -62,7 +63,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     <h3 class='text-center'>Coffeeshops In Oxford</h3>
 
-    <div id="all-restaurants">
+    <div id="all-restaurants" class='mb-5'>
         <?php
         if(!isset($_POST['search'])  Or $_POST['restaurantName'] === ''){
             try {

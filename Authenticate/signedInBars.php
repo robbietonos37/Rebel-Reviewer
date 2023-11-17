@@ -36,6 +36,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         <ul id="right-items">
             <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
+            <li><a class="btn btn-lg account-action" href="myReviews.php">My Reviews</a></li>
             <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
             <?php if($webId === 'retonos'){
                 echo "
@@ -50,7 +51,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <h3 class='text-center'>Bars In Oxford</h3>
 
 
-    <div id="all-restaurants">
+    <div id="all-restaurants" class='mb-5'>
         <?php
         try {
             $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Bar" ORDER BY businessName';
