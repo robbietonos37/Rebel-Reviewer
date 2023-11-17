@@ -90,6 +90,21 @@ if (isset($_POST['delete'])) {
         </ul>
     </nav>
 
+    <div id="filter-box" class='card-body'>
+        <div class='row d-flex justify-content-center' id='filter-section'>
+            <div class='col-md-7'>
+                <form action="allBusinesses.php" method="POST">
+                    <div class='input-group d-flex mb-3'>
+                        <div id='search-box' class='d-flex flex-row'>
+                            <input type='text' name='restaurantName' class='form-control' placeholder='Search Businesss'>
+                            <button type='submit' class='btn btn-lg' name='search' id='searcher'>Search</button>
+                        </div>
+                    </div>    
+                <form>
+            </div>
+        </div>
+    </div>
+
     <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered'>
         <tr>
     <td>Business Name</td>
@@ -99,12 +114,24 @@ if (isset($_POST['delete'])) {
 </tr>
     <?php
     //echo "this is session for webId: " .$webId;
+    if(!isset($_POST['search'])  Or $_POST['restaurantName'] === ''){
     try {
-            $query = 'SELECT * FROM businessData';
+            $query = 'SELECT * FROM businessData ORDER BY businessName';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
+    }
+    else {
+        $restaurantName = $_POST['restaurantName'];
+        try {
+            $query = 'SELECT * FROM businessData WHERE businessName LIKE ? ORDER BY businessName';
+            $stmt = $conn->prepare($query);
+            $stmt->execute(["%" . $restaurantName . "%"]);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
         
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
