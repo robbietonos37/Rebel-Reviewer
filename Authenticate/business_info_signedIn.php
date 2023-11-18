@@ -3,9 +3,21 @@ session_start();
 require_once("/home/retonos/public_html/connect.php");
 $businessId = $_GET['businessId'];
 $webId = $_SESSION['webID'];
+if(!isset($webId)){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+}
 
 $conn = DataBase::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$query = "SELECT * FROM Users WHERE webId = :webId";
+$statement = $conn->prepare($query);
+$statement->execute(['webId' => $webId]);
+$row = $statement->fetch(PDO::FETCH_ASSOC);
+if($row['isBlacklisted'] == 1){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/blacklistedPage.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>

@@ -4,6 +4,10 @@ require_once("/home/retonos/public_html/connect.php");
 $pageWebId = $_GET['webId'];
 $webId = $_SESSION['webID'];
 
+if(!isset($webId)){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+}
+
 $conn = DataBase::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
