@@ -11,9 +11,12 @@ $query = "SELECT * FROM Users WHERE webId = :webId";
 $statement = $conn->prepare($query);
 $statement->execute(['webId' => $webId]);
 $row = $statement->fetch(PDO::FETCH_ASSOC);
-//$row = $statement->fetch(PDO::FETCH_ASSOC);$row = $stmt->fetch(PDO::FETCH_ASSOC)
 if($row && $row['isAdmin'] == 1){
     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/admin.php");
+    exit;
+}
+if($row && $row['isBlacklisted'] == 1){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/blacklistedPage.php");
     exit;
 }
 else if($statement->rowCount() > 0){
