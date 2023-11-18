@@ -25,20 +25,22 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 <body class="bg-light">
 <?php
 
+//var_dump($_POST);
+
 if (isset($_POST['deny'])) {
     
-    $reviewId = $_POST['reviewId'];
+    $webIdToBlacklist = $_POST['webId'];
 
     try{
-    $query = 'DELETE FROM reviews WHERE reviewId= ?';
+    $query = 'UPDATE Users SET isBlacklisted = 1 WHERE webId = ?';
     $statement = $conn->prepare($query);
-    $statement->bindParam(1,$reviewId);
+    $statement->bindParam(1,$webIdToBlacklist);
     $result = $statement->execute();
     // if($result){
     //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
     // }
     // else {
-    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInRestaurants.php");
     // }
     } catch(PDOException $e){
         echo $e->getMessage();
@@ -62,8 +64,6 @@ if (isset($_POST['deny'])) {
         </ul>
     </nav>
 
-
-
     <div class='text-center'>Unapproved reviews will be here</div>
 
     <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered'>
@@ -85,15 +85,16 @@ if (isset($_POST['deny'])) {
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "
-            <form method='post' action='admin.php'>
+            <form method='post' action='allAcounts.php'>
             <tr>
             <td>" . $row['webId'] . "</td>
             <td>" . $row['firstName'] . "</td>
             <td>" . $row['lastName'] . "</td>
             <td>" . $row['email'] . "</td>
+            <input type='hidden' name='webId' value=" . $row['webId'] . ">
             <td><button name='deny' class='btn btn-md deny' type='submit'>Blacklist</button></td>
-            </form>
-        </tr>";
+        </tr>
+        </form>";
         }
 
     ?>
@@ -113,18 +114,10 @@ if (isset($_POST['deny'])) {
 </html>
 
 <script>
-    const approveButtons = document.getElementsByClassName('approve');
-    const approveButtonsArray = Array.from(approveButtons);
-    approveButtonsArray.forEach((button) => button.addEventListener('click', (e) => {
-        if(!confirm("Are you SURE you want to approve this review? If so it will be live for everyone to see and will affect the business's rating")){
-            e.preventDefault();
-        }
-    }))
-
     const denyButtons = document.getElementsByClassName('deny');
     const denyButtonsArray = Array.from(denyButtons);
     denyButtonsArray.forEach((button) => button.addEventListener('click', (e) => {
-        if(!confirm("Are you SURE you want to deny this review? If so it will be deleted FOREVER. PLEASE BE SURE!")){
+        if(!confirm("Are you SURE you want to blacklist this user?")){
             e.preventDefault();
         }
     }))

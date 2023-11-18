@@ -1,22 +1,56 @@
-#to-login,
-#back-home {
-    border: solid 3px red;
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
 }
 
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
-#back-home:hover {
-    background: red;
+#left-items {
+    margin-top: 15px;
+    display: flex;
+    gap: 30px;
+}
+
+.site-options {
+    border: solid 3px blue;
+}
+
+.site-options:hover {
     color: white;
+
 }
 
-#to-login:hover {
-    background: red;
-    color: white;
-}
-
-#button-box {
+#choices {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
     gap: 15px;
-    margin-bottom: 100px;
+    padding-right: 150px;
+}
+
+#right-items {
+    margin-top: 15px;
+    margin-right: 30px;
+    display: flex;
+    gap: 30px;
+}
+
+.account-action {
+    margin-left: auto;
+    margin-right: 30px;
+    border: solid 2px red;
+}
+
+.account-action:hover {
+    color: white;
+    background-color: red;
 }
 
 .business-options {
@@ -26,5 +60,4 @@
 .business-options:hover {
     color: white;
     background-color: black;
-
 }

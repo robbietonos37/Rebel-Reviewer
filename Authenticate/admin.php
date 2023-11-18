@@ -145,7 +145,7 @@ ORDER BY reviews.date_submitted';
             <td>" . $row['webId'] . "</td>
             <td>" . $row['businessName'] . "</td>
             <td>" . $row['rating'] . "</td>
-            <td>" . htmlspecialchars($row['reviewText'], ENT_QUOTE) . "</td>
+            <td>" . htmlspecialchars($row['reviewText'], ENT_QUOTES) . "</td>
             <td>" . $row['date_submitted'] . "</td>
             <input type='hidden' name='reviewId' value=" . $row['reviewId'] . ">
             <input type='hidden' name='businessId' value=" . $row['businessId'] . ">

@@ -20,7 +20,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 <body>
     <?php
-    echo "This is " .$webId. "'s page";
+    //echo "This is " .$webId. "'s page";
     ?>
     <nav class="mt-3">
         <ul id="left-items">

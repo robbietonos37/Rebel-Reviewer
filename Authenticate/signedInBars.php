@@ -48,17 +48,34 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     </nav>
 
+    <div id="filter-box" class='card-body'>
+        <div class='row d-flex justify-content-center' id='filter-section'>
+            <div class='col-md-7'>
+                <form action="signedInCoffeeshops.php" method="POST">
+                    <div class='input-group d-flex mb-3'>
+                        <div id='search-box' class='d-flex flex-row'>
+                            <input type='text' name='restaurantName' class='form-control' placeholder='Search Bars'>
+                            <button type='submit' class='btn btn-lg' name='search' id='searcher'>Search</button>
+                        </div>
+                    </div>    
+                <form>
+            </div>
+        </div>
+    </div>
+
     <h3 class='text-center'>Bars In Oxford</h3>
 
 
     <div id="all-restaurants" class='mb-5'>
-        <?php
-        try {
+    <?php
+    if(!isset($_POST['search'])  Or $_POST['restaurantName'] === '') {
+            try {
             $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Bar" ORDER BY businessName';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
+    }
         
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
