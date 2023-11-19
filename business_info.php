@@ -31,7 +31,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <li><a class="btn btn-lg business-options" href="coffeeshops.php">Coffeeshops</a></li>
         </ul>
         <ul id="right-items">
-            <li><a class="btn fs-5 account-action" href="loginPage.php">Log In</a></li>
+            <li><a class="btn fs-5 account-action" href="https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/">Log In</a></li>
         </ul>
     </nav>
     <div>
