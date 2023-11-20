@@ -38,7 +38,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <div id="filter-box" class='card-body'>
         <div class='row d-flex justify-content-center' id='filter-section'>
             <div class='col-md-7'>
-                <form action="restaurants.php" method="POST">
+                <form action="bars.php" method="POST">
                     <div class='input-group d-flex mb-3'>
                         <div id='search-box' class='d-flex flex-row'>
                             <input type='text' name='restaurantName' class='form-control' placeholder='Search Bars'>
@@ -46,8 +46,8 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         </div>
                         <div id="myDropdown" class="dropdown-content mt-3">
                             <label>Select a Cuisine</label>
-                            <select name="Cuisine">
-                                <option value="None" selected>
+                            <select name="cuisineId">
+                                <option value="None-Selected" selected>
                                     None Selected
                                 </option>
                                 <?php
@@ -58,12 +58,13 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                     echo $e->getMessage();
                                     }
                                     while($row = $statement->fetch(PDO::FETCH_ASSOC)){
-                                        echo "<option value=" . $row['cuisineDesc'] . ">"
+                                        echo "<option value=" . $row['cuisineId'] . ">"
                                         . $row['cuisineDesc'] . 
                                         "</option>";
                                     }
                             ?>
                             </select>
+                            <button type='submit' class='btn site-options btn-lg' name="cuisine-search">Filter</button>
                         </div>
                     </div>    
                 <form>
@@ -76,13 +77,29 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     <div id="all-restaurants">
         <?php
-        if(!isset($_POST['search'])  Or $_POST['restaurantName'] === ''){
+        if((!isset($_POST['search']) And !isset($_POST['cuisine-search'])) Or ($_POST['restaurantName'] === '' And !isset($_POST['cuisine-search']))){
             try {
                 $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Bar" ORDER BY businessName';
                 $stmt = $conn->query($query);
             } catch (PDOException $e) {
             echo $e->getMessage();
             }
+        }
+        else if(isset($_POST['cuisine-search'])){
+            try{
+                $cuisineId = $_POST['cuisineId'];
+                $query = 'SELECT bd.*
+                FROM businessData AS bd
+                JOIN businessTypes AS bt ON bd.businessId = bt.businessId
+                JOIN businessCuisines AS bc ON bd.businessId = bc.businessId
+                WHERE bt.type = "Bar" AND bc.cuisineId = ?';
+                $stmt = $conn->prepare($query);
+                //$stmt->bindParam(1,  "%'" . $restaurantName . "'%");
+                $stmt->execute([$cuisineId]);
+                //$result = $stmt->execute();
+                } catch (PDOException $e) {
+                    echo "Error executing the query: " . $e->getMessage();
+                }
         }
         else {
             try{
