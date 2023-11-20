@@ -62,6 +62,27 @@ if(isset($_POST['favorite'])){
         </ul>
     </nav>
 
+    <div>
+        <?php 
+         try{
+            $query = "SELECT * FROM businessData WHERE businessId = ?";
+        $statement = $conn->prepare($query);
+        $statement->bindParam(1,$businessId);
+        $statement->execute();
+        } catch(PDOException $e){
+            echo $e->getMessage();
+        }
+        while ($row = $statement->fetch()) {
+            echo "
+        <div class='d-flex align-items-center flex-column justify-content-center gap-2 mb-1'>
+        <h3 class='text-center mb-3'>" . $row['businessName'] . "</h3>
+        </div>
+
+        ";
+        }
+        ?>
+    </div>
+
     <div class='d-flex justify-content-center align-items-center d-column'>
         <form method="POST" action="createFavorite.php">
             <div id='review-box'class='d-flex justify-content-center align-items-center flex-column gap-3 p-5'>
