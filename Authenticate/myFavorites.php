@@ -50,19 +50,16 @@ if($row['isBlacklisted'] == 1){
     <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered mt-5'>
         <tr>
     <td>Business Name</td>
-    <td>Rating</td>
-    <td>Date Submitted</td>
-    <td>Review Text</td>
-    <td>Status</td>
+    <td>Favorite Order</td>
+    <td>Delete</td>
 </tr>
 
         <?php
         try{
-            $query = 'SELECT reviews.*, businessData.businessName
-            FROM reviews
-            JOIN businessData ON reviews.businessId = businessData.businessId WHERE
-            reviews.webId = ?
-            ORDER BY reviews.date_submitted';
+            $query = 'SELECT Favorites.*, businessData.businessName
+            FROM Favorites
+            JOIN businessData ON Favorites.businessId = businessData.businessId WHERE
+            Favorites.webId = ?';
         $statement = $conn->prepare($query);
         $statement->bindParam(1,$webId);
         $statement->execute();
@@ -72,16 +69,8 @@ if($row['isBlacklisted'] == 1){
         while ($row = $statement->fetch()) {
             echo " <tr>
             <td>" . $row['businessName'] . "</td>
-            <td >" . $row['rating'] . "</td>
-            <td>" . $row['date_submitted'] . "</td>
-            <td>" . htmlspecialchars($row['reviewText'], ENT_QUOTES) . "</td>";
-           if($row['approved'] == 1){
-            echo "<td>Approved!</td>";
-           }
-           else{
-            echo "<td>Pending</td>";
-           }
-            echo "
+            <td>" . htmlspecialchars($row['favoriteOrder'], ENT_QUOTES) . "</td>";
+            echo "<td>Delete</td>
             </tr>
             ";
         }
@@ -90,7 +79,34 @@ if($row['isBlacklisted'] == 1){
         </table>
 
     </div>
-    
+    <?php
+    try {
+             $query = 'SELECT reviews.*, businessData.businessName
+            FROM reviews
+            JOIN businessData ON reviews.businessId = businessData.businessId WHERE
+            reviews.webId = ?
+            ORDER BY reviews.date_submitted';
+        $statement = $conn->prepare($query);
+        $statement->bindParam(1,$webId);
+        $statement->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+        
+
+        while ($row = $sta->fetch(PDO::FETCH_ASSOC)) {
+            echo "
+            <tr>
+            <td>" . $row['businessName'] . "</td>
+            <td>" . $row['rating'] . "</td>
+            <td>" . htmlspecialchars($row['reviewText'], ENT_QUOTE) . "</td>
+            <td>" . $row['date_submitted'] . "</td>
+            <input type='hidden' name='reviewId' value=" . $row['reviewId'] . ">
+            <input type='hidden' name='businessId' value=" . $row['businessId'] . ">
+        </tr>";
+        }
+
+    ?>
     </table>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
