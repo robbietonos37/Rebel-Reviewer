@@ -59,7 +59,7 @@ if($row['isBlacklisted'] == 1){
     <div id="filter-box" class='card-body'>
         <div class='row d-flex justify-content-center' id='filter-section'>
             <div class='col-md-7'>
-                <form action="signedInCoffeeshops.php" method="POST">
+                <form action="signedInBars.php" method="POST">
                     <div class='input-group d-flex mb-3'>
                         <div id='search-box' class='d-flex flex-row'>
                             <input type='text' name='restaurantName' class='form-control' placeholder='Search Bars'>
@@ -82,6 +82,21 @@ if($row['isBlacklisted'] == 1){
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
+        }
+    }
+    else {
+        try{
+            $restaurantName = $_POST['restaurantName'];
+            $query = 'SELECT * FROM businessData AS bd 
+            LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId AND bt.type = "Bar" 
+            WHERE bd.businessName LIKE ? 
+            ORDER BY bd.businessName';
+            $stmt = $conn->prepare($query);
+            //$stmt->bindParam(1,  "%'" . $restaurantName . "'%");
+            $stmt->execute(["%" . $restaurantName . "%"]);
+            //$result = $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error executing the query: " . $e->getMessage();
         }
     }
         
