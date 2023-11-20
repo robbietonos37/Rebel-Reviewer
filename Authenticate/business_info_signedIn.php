@@ -47,9 +47,12 @@ if($row['isBlacklisted'] == 1){
         <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
         <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
         <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
+        <li><a class="btn btn-lg account-action" href="myReviews.php">My Favorite Orders</a></li>
+        <li><a class="btn btn-lg account-action" href="myReviews.php">My Reviews</a></li>
+        <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
         </ul>
     </nav>
-    <div>
+    <div class='d-flex align-items-center flex-column justify-content-center'>
 
         <?php
         try{
@@ -62,17 +65,17 @@ if($row['isBlacklisted'] == 1){
         }
         while ($row = $statement->fetch()) {
             echo "
-        <div class='d-flex align-items-center flex-column justify-content-center gap-2'>
+        <div class='d-flex align-items-center flex-column justify-content-center gap-2 mb-1'>
         <h3 class='text-center mb-3'>" . $row['businessName'] . "</h3>
         <span>Address: " . $row['address'] . "</span>
 
+        <a href='createFavorite.php?businessId={$businessId}' class='btn btn-md' id='to-createFavorite'>Create Favorite Order</a>
         </div>
 
         ";
         }
 
         ?>
-
     </div>
 
     <div class='d-flex justify-content-center'>
