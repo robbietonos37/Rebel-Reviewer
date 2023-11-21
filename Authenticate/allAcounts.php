@@ -47,6 +47,26 @@ if (isset($_POST['deny'])) {
     }
 
 }
+if (isset($_POST['deny-undo'])) {
+    
+    $webIdToBlacklist = $_POST['webId'];
+
+    try{
+    $query = 'UPDATE Users SET isBlacklisted = 0 WHERE webId = ?';
+    $statement = $conn->prepare($query);
+    $statement->bindParam(1,$webIdToBlacklist);
+    $result = $statement->execute();
+    // if($result){
+    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
+    // }
+    // else {
+    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInRestaurants.php");
+    // }
+    } catch(PDOException $e){
+        echo $e->getMessage();
+    }
+
+}
 ?>
     <nav class="mt-3">
         <ul id="choices">
@@ -64,15 +84,16 @@ if (isset($_POST['deny'])) {
         </ul>
     </nav>
 
-    <div class='text-center'>Unapproved reviews will be here</div>
+    <h2 class='text-center'>All Accounts</h2>
 
-    <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered'>
+    <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered mb-5 mt-5'>
         <tr>
     <td>WebId</td>
     <td>First Name</td>
     <td>Last Name</td>
     <td>Email</td>
     <td>Blacklist</td>
+    <td>Undo Blacklist</td>
 </tr>
     <?php
     try {
@@ -91,8 +112,15 @@ if (isset($_POST['deny'])) {
             <td>" . $row['firstName'] . "</td>
             <td>" . $row['lastName'] . "</td>
             <td>" . $row['email'] . "</td>
-            <input type='hidden' name='webId' value=" . $row['webId'] . ">
-            <td><button name='deny' class='btn btn-md deny' type='submit'>Blacklist</button></td>
+            <input type='hidden' name='webId' value=" . $row['webId'] . ">";
+            if($row['isBlacklisted'] === 0){
+                echo "<td><button name='deny' class='btn btn-md deny' type='submit'>Blacklist</button></td>
+                <td></td>";
+            }
+            else{
+                echo "<td></td><td><button name='deny-undo' class='btn btn-md deny-undo' type='submit'>Undo Blacklist</button></td>";
+            }
+            echo "
         </tr>
         </form>";
         }
@@ -118,6 +146,14 @@ if (isset($_POST['deny'])) {
     const denyButtonsArray = Array.from(denyButtons);
     denyButtonsArray.forEach((button) => button.addEventListener('click', (e) => {
         if(!confirm("Are you SURE you want to blacklist this user?")){
+            e.preventDefault();
+        }
+    }))
+
+    const undoBlacklistButtons = document.getElementsByClassName('deny-undo');
+    const undoBlacklistButtonsArray = Array.from(undoBlacklistButtons);
+    undoBlacklistButtonsArray.forEach((button) => button.addEventListener('click', (e) => {
+        if(!confirm("Are you SURE you want to undo the blacklist for this user?")){
             e.preventDefault();
         }
     }))

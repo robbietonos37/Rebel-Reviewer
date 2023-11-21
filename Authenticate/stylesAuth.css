@@ -248,3 +248,12 @@ table {
     background-color: green;
     color: white;
 }
+
+.deny-undo {
+    border: solid 2px grey;
+}
+
+.deny-undo:hover {
+    background-color: grey;
+    color: white;
+}
