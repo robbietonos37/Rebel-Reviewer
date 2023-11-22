@@ -51,7 +51,7 @@ if($row['isBlacklisted'] == 1){
             <li><a class="btn fs-5 account-action" href="logout.php">Logout</a></li>
         </ul>
     </nav>
-    <h2 class='text-center mb-3 mt-3'> <?php echo $webId . "'s Reviews"?> </h2>
+    <h2 class='text-center mb-3 mt-3'> <?php echo $pageWebId . "'s Reviews"?> </h2>
     <div>
 
         <?php
