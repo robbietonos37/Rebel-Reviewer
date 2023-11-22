@@ -1,6 +1,12 @@
 <?php
 session_start();
 require_once("/home/retonos/public_html/connect.php");
+
+if(!isset($_SESSION['webID'])){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    exit;
+}
+
 $webId = $_SESSION['webID'];
 
 $conn = DataBase::connectDB();

@@ -1,11 +1,15 @@
 <?php
 session_start();
 require_once("/home/retonos/public_html/connect.php");
-$businessId = $_GET['businessId'];
-$webId = $_SESSION['webID'];
-if(!isset($webId)){
+
+if(!isset($_SESSION['webID'])){
     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    exit;
 }
+
+$businessId = $_GET['businessId'];
+
+$webId = $_SESSION['webID'];
 
 $conn = DataBase::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -47,7 +51,7 @@ if($row['isBlacklisted'] == 1){
         <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
         <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
         <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
-        <li><a class="btn btn-lg account-action" href="myReviews.php">My Favorite Orders</a></li>
+        <li><a class="btn btn-lg account-action" href="myFavorites.php">My Favorite Orders</a></li>
         <li><a class="btn btn-lg account-action" href="myReviews.php">My Reviews</a></li>
         <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
         </ul>

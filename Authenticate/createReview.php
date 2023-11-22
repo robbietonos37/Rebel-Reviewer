@@ -5,6 +5,7 @@ $businessId = $_GET['businessId'];
 
 if(!isset($_SESSION['webID'])){
     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    exit;
 }
 
 $webId = $_SESSION['webID'];
