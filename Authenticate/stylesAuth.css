@@ -197,7 +197,7 @@ table {
 }
 
 .input-group {
-    gap: 70px;
+    gap: 30px;
     flex-direction: row;
 }
 
@@ -207,6 +207,10 @@ table {
 }
 
 #filter-box {
+    gap: 25px;
+}
+
+#myDropdown {
     gap: 25px;
 }
 

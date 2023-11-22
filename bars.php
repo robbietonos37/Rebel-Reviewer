@@ -64,7 +64,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                     }
                             ?>
                             </select>
-                            <button type='submit' class='btn site-options btn-lg' name="cuisine-search">Filter</button>
+                            <button type='submit' class='btn site-options btn-lg m-1' name="cuisine-search">Filter</button>
                         </div>
                     </div>    
                 <form>
