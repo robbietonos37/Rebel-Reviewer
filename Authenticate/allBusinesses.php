@@ -102,7 +102,7 @@ if (isset($_POST['delete'])) {
         <div class='row d-flex justify-content-center' id='filter-section'>
             <div class='col-md-7'>
                 <form action="allBusinesses.php" method="POST">
-                    <div class='input-group d-flex mb-3'>
+                    <div class='input-group d-flex justify-content-center mb-3'>
                         <div id='search-box' class='d-flex flex-row'>
                             <input type='text' name='restaurantName' class='form-control' placeholder='Search Businesss'>
                             <button type='submit' class='btn btn-lg' name='search' id='searcher'>Search</button>
