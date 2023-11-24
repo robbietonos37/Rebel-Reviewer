@@ -60,7 +60,7 @@ if($row['isBlacklisted'] == 1){
         <div class='row d-flex justify-content-center' id='filter-section'>
             <div class='col-md-7'>
                 <form action="signedInCoffeeshops.php" method="POST">
-                    <div class='input-group d-flex mb-3'>
+                    <div class='input-group d-flex flex-row justify-content-center mb-3'>
                         <div id='search-box' class='d-flex flex-row'>
                             <input type='text' name='restaurantName' class='form-control' placeholder='Search Coffeeshops'>
                             <button type='submit' class='btn btn-lg' name='search' id='searcher'>Search</button>
