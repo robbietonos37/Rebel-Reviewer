@@ -76,7 +76,8 @@ if(isset($_POST['edit'])){
         echo $e->getMessage();
         }
     }
-    
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/allBusinesses.php");
+    exit;
  }
 ?>
 
