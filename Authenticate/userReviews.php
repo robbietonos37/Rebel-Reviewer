@@ -53,7 +53,7 @@ if($row['isBlacklisted'] == 1){
         </ul>
     </nav>
     <h2 class='text-center mb-3 mt-3'> <?php echo $pageWebId . "'s Reviews"?> </h2>
-    <div>
+    <div class='mb-5'>
 
         <?php
         try{
