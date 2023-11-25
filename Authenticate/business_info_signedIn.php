@@ -104,7 +104,7 @@ if($row['isBlacklisted'] == 1){
         </div>
         ";
         }
-        echo "<div class='d-flex flex-row justify-content-center align-items-center type-list'>
+        echo "<div class='d-flex flex-row justify-content-center align-items-center type-list mb-3'>
         <span>Types:  </span>";
         while($row2 = $statement2->fetch(PDO::FETCH_ASSOC)){
             echo"<span class='pr-3'>  " . $row2['type'] . "</span>";
@@ -127,7 +127,7 @@ if($row['isBlacklisted'] == 1){
             echo $e->getMessage();
         }
         if($statement->rowCount() == 0){
-            echo "<a href='createReview.php?businessId={$businessId}' id='leave-review' class='btn btn-md mt-3 mb-3'>Review Me</a>";
+            echo "<a href='createReview.php?businessId={$businessId}' id='leave-review' class='btn btn-lg mt-3 mb-3'>Review Me</a>";
         }
 
         ?>
