@@ -63,10 +63,19 @@ nav {
     background-color: red;
 }
 
-#review {
-    border: solid 2px black;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    padding-left: 37px;
-    padding-right: 37px;
+.review-single {
+    border: solid 2px red;
+    margin-left: 115px;
+    margin-right: 115px;
+    max-width: 900px;
+    padding: 25px;
+    width: 75%;
+}
+
+#reviews {
+    margin-bottom: 55px;
+}
+
+.type-list {
+    gap: 10px;
 }

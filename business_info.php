@@ -34,9 +34,13 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             <li><a class="btn fs-5 account-action" href="https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/">Log In</a></li>
         </ul>
     </nav>
+
+
     <div>
 
         <?php
+        if(isset($_POST['rating-search'])){
+            $businessId = $_POST['businessId'];
         try{
             $query = "SELECT * FROM businessData WHERE businessId = ?";
         $statement = $conn->prepare($query);
@@ -44,6 +48,33 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $statement->execute();
         } catch(PDOException $e){
             echo $e->getMessage();
+        }
+        try{
+            $query2 = "SELECT * FROM businessTypes WHERE businessId = ?";
+        $statement2 = $conn->prepare($query2);
+        $statement2->bindParam(1,$businessId);
+        $statement2->execute();
+        } catch(PDOException $e){
+            echo $e->getMessage();
+        }
+        }
+        else {
+            try{
+                $query = "SELECT * FROM businessData WHERE businessId = ?";
+            $statement = $conn->prepare($query);
+            $statement->bindParam(1,$businessId);
+            $statement->execute();
+            } catch(PDOException $e){
+                echo $e->getMessage();
+            }
+            try{
+                $query2 = "SELECT * FROM businessTypes WHERE businessId = ?";
+            $statement2 = $conn->prepare($query2);
+            $statement2->bindParam(1,$businessId);
+            $statement2->execute();
+            } catch(PDOException $e){
+                echo $e->getMessage();
+            }    
         }
         while ($row = $statement->fetch()) {
             echo "
@@ -53,28 +84,74 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         </div>
         ";
         }
+        echo "<div class='d-flex flex-row justify-content-center align-items-center type-list'>
+        <span>Types:  </span>";
+        while($row2 = $statement2->fetch(PDO::FETCH_ASSOC)){
+            echo"<span class='pr-3'>  " . $row2['type'] . "</span>";
+        }
+        echo "</div>";
 
         ?>
 
     </div>
     <h2 class='text-center'>Reviews</h2>
-    <div id="reviews" class='d-flex align-items-center justify-content-center'>
+    <div class='d-flex justify-content-center mb-5'>
+        <form action="business_info.php?businessId=<?php echo $businessId; ?>" method="POST">
+            <label>Filter By Rating</label>
+                <select name="rating-order">
+                    <option value="None" selected>
+                        None Selected
+                    </option>
+                    <option value="highest-first">Highest to Lowest</option>
+                    <option value="lowest-first">Lowest to Highest</option>
+                        </select>
+                    <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">
+            <button type='submit' class='btn site-options btn-lg m-1' name="rating-search">Filter</button>
+        </form>
+    </div>
+    <div id="reviews" class='d-flex align-items-center flex-column justify-content-center'>
         <?php
-    try{
-        $query = 'SELECT * FROM reviews WHERE businessId = ? AND approved = 1 ORDER BY date_submitted DESC';
-        $statement = $conn->prepare($query);
-        $statement->bindParam(1,$businessId);
-        $statement->execute();
-    } catch(PDOException $e){
-        echo $e->getMessage();
-    }
+        if(isset($_POST['rating-search']) && $_POST['rating-order'] !== "None"){
+            $businessId = $_POST['businessId'];
+            if($_POST['rating-order'] === 'highest-first'){
+                
+                try{
+                    $query = 'SELECT * FROM reviews WHERE businessId = ? AND approved = 1 ORDER BY rating DESC';
+                    $statement = $conn->prepare($query);
+                    $statement->bindParam(1,$businessId);
+                    $statement->execute();
+                } catch(PDOException $e){
+                    echo $e->getMessage();
+                }
+            }
+            else if($_POST['rating-order'] === 'lowest-first'){
+                try{
+                    $query = 'SELECT * FROM reviews WHERE businessId = ? AND approved = 1 ORDER BY rating ASC';
+                    $statement = $conn->prepare($query);
+                    $statement->bindParam(1,$businessId);
+                    $statement->execute();
+                } catch(PDOException $e){
+                    echo $e->getMessage();
+                }
+            }
+        }
+        else{
+        try{
+            $query = 'SELECT * FROM reviews WHERE businessId = ? AND approved = 1 ORDER BY date_submitted DESC';
+            $statement = $conn->prepare($query);
+            $statement->bindParam(1,$businessId);
+            $statement->execute();
+        } catch(PDOException $e){
+            echo $e->getMessage();
+        }
+}
     while ($row = $statement->fetch()) {
         echo "
-    <div id='review' class='d-flex align-items-center flex-column justify-content-center'>
+    <div class='review-single d-flex flex-column justify-content-center align-items-center'>
     <h3 class='text-center mb-3'>Rating Value " . $row['rating'] . "</h3>
     <span>Date: " . $row['date_submitted'] . "</span>
     <a href='userReviewNotSignedIn.php?webId={$row['webId']}'>User: " . $row['webId'] . "</a>
-    <p>Review: " . $row['reviewText'] . "</p>
+    <p class='text-center'>Review: " . $row['reviewText'] . "</p>
 
     </div>
 
