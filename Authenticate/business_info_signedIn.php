@@ -100,6 +100,7 @@ if($row['isBlacklisted'] == 1){
             echo "
         <div class='d-flex align-items-center flex-column justify-content-center gap-2 mb-3'>
         <h3 class='text-center mb-3'>" . $row['businessName'] . "</h3>
+        <h4 class='text-center mb-3'>Overall Rating: " . $row['overallRating'] . "</h4>
         <span>Address: " . $row['address'] . "</span>
         </div>
         ";
