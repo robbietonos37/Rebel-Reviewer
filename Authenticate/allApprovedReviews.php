@@ -10,7 +10,7 @@ if(!isset($_SESSION['webID'])){
 $webId = $_SESSION['webID'];
 
 if($webId !== 'retonos'){
-    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInHomepage.html");
     exit;
 }
 
@@ -118,7 +118,7 @@ if (isset($_POST['delete'])) {
 
 
 
-    <div class='text-center'>Unapproved reviews will be here</div>
+    <h2 class='text-center'>All Approved Reviews will be here</h2>
 
     <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered'>
         <tr>

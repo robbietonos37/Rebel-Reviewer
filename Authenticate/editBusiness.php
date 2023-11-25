@@ -9,7 +9,7 @@ if(!isset($_SESSION['webID'])){
 
 $webId = $_SESSION['webID'];
 if($webId !== 'retonos'){
-    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInHomepage.html");
     exit;
 }
 $businessId = $_GET['businessId'];
@@ -76,7 +76,7 @@ if(isset($_POST['edit'])){
         echo $e->getMessage();
         }
     }
-    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/allBusinesses.php");
+    header("Location: allBusinesses.php");
     exit;
  }
 ?>
