@@ -57,7 +57,6 @@ if($row['isBlacklisted'] == 1){
         <tr>
     <td>Business Name</td>
     <td>Favorite Order</td>
-    <td>Delete</td>
 </tr>
 
         <?php
@@ -75,10 +74,8 @@ if($row['isBlacklisted'] == 1){
         while ($row = $statement->fetch()) {
             echo " <tr>
             <td>" . $row['businessName'] . "</td>
-            <td>" . htmlspecialchars($row['favoriteOrder'], ENT_QUOTES) . "</td>";
-            echo "<td>Delete</td>
-            </tr>
-            ";
+            <td>" . htmlspecialchars($row['favoriteOrder'], ENT_QUOTES) . "</td>
+            </tr>";
         }
 
         ?>
