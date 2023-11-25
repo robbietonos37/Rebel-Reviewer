@@ -261,3 +261,20 @@ table {
     background-color: grey;
     color: white;
 }
+
+.review-single {
+    border: solid 2px red;
+    margin-left: 115px;
+    margin-right: 115px;
+    max-width: 900px;
+    padding: 25px;
+    width: 75%;
+}
+
+#reviews {
+    margin-bottom: 55px;
+}
+
+.type-list {
+    gap: 10px;
+}
