@@ -278,3 +278,7 @@ table {
 .type-list {
     gap: 10px;
 }
+
+#approved-reviews {
+    margin-bottom: 100px;
+}

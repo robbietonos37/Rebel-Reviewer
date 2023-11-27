@@ -120,7 +120,7 @@ if (isset($_POST['delete'])) {
 
     <h2 class='text-center'>All Approved Reviews will be here</h2>
 
-    <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered'>
+    <table id="approved-reviews" class='table justify-content-center align-items-center table-bordered'>
         <tr>
     <td>WebId</td>
     <td>Business Name</td>
