@@ -82,10 +82,10 @@ if($row['isBlacklisted'] == 1){
             <td>" . $row['date_submitted'] . "</td>
             <td>" . htmlspecialchars($row['reviewText'], ENT_QUOTES) . "</td>";
            if($row['approved'] == 1){
-            echo "<td>Approved!</td>";
+            echo "<td id='live'>Approved!</td>";
            }
            else{
-            echo "<td>Pending</td>";
+            echo "<td id='pending'>Pending</td>";
            }
             echo "
             </tr>

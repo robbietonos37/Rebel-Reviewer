@@ -282,3 +282,14 @@ table {
 #approved-reviews {
     margin-bottom: 100px;
 }
+
+#live {
+    color: green;
+    font-weight: bold;
+}
+
+#pending {
+    color: gray;
+    font-style: italic;
+    font-weight: bold;
+}
