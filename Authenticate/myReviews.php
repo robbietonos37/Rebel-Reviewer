@@ -68,7 +68,7 @@ if($row['isBlacklisted'] == 1){
             FROM reviews
             JOIN businessData ON reviews.businessId = businessData.businessId WHERE
             reviews.webId = ?
-            ORDER BY reviews.date_submitted';
+            ORDER BY reviews.date_submitted DESC';
         $statement = $conn->prepare($query);
         $statement->bindParam(1,$webId);
         $statement->execute();
