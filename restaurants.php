@@ -23,7 +23,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         <ul id="left-items">
             <li><a class="btn fs-5 site-options" href="index.html">Rebel Reviewer</a></li>
             <li><a class="btn fs-5 site-options" href="howItWorks.html">How does it work?</a></li>
-            <li><a class="btn fs-5 site-options" href="something.html">Contact</a></li>
+            <li><a class="btn fs-5 site-options" href="contact.html">Contact</a></li>
         </ul>
         <ul id="right-items">
             <li><a class="btn btn-lg business-options" href="coffeeshops.php">Coffeeshops</a></li>
