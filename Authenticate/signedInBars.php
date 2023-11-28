@@ -48,6 +48,7 @@ if($row['isBlacklisted'] == 1){
             <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
             <li><a class="btn btn-lg account-action" href="myReviews.php">My Reviews</a></li>
+            <li><a class="btn btn-lg account-action" href="myFavorites.php">My Favorite Orders</a></li>
             <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
             <?php if($webId === 'retonos'){
                 echo "

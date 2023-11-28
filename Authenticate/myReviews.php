@@ -49,6 +49,7 @@ if($row['isBlacklisted'] == 1){
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
         </ul>
         <ul id="right-items">
+        <li><a class="btn btn-lg account-action" href="myFavorites.php">My Favorite Orders</a></li>
             <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
         </ul>
     </nav>

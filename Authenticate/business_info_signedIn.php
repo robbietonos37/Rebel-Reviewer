@@ -51,8 +51,8 @@ if($row['isBlacklisted'] == 1){
         <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
         <li><a class="btn btn-lg business-options" href="signedInBars.php">Bars</a></li>
         <li><a class="btn btn-lg business-options" href="signedInRestaurants.php">Restaurants</a></li>
-        <li><a class="btn btn-lg account-action" href="myFavorites.php">My Favorite Orders</a></li>
         <li><a class="btn btn-lg account-action" href="myReviews.php">My Reviews</a></li>
+        <li><a class="btn btn-lg account-action" href="myFavorites.php">My Favorite Orders</a></li>
         <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
         </ul>
     </nav>
@@ -110,7 +110,8 @@ if($row['isBlacklisted'] == 1){
         while($row2 = $statement2->fetch(PDO::FETCH_ASSOC)){
             echo"<span class='pr-3'>  " . $row2['type'] . "</span>";
         }
-        echo "</div>";
+        echo "</div>
+        <a href='createFavorite.php?businessId={$businessId}' class='btn btn-md' id='to-createFavorite'>Create Favorite Order</a>";
 
         ?>
     </div>
