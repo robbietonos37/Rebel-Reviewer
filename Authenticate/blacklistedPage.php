@@ -1,3 +1,28 @@
+<?php
+session_start();
+require_once("/home/retonos/public_html/connect.php");
+
+if(!isset($_SESSION['webID'])){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
+    exit;
+}
+
+$webId = $_SESSION['webID'];
+
+$conn = Database::connectDB();
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$query = "SELECT * FROM Users WHERE webId = :webId";
+$statement = $conn->prepare($query);
+$statement->execute(['webId' => $webId]);
+$row = $statement->fetch(PDO::FETCH_ASSOC);
+if($row['isBlacklisted'] == 0){
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInHomepage.html");
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
