@@ -20,7 +20,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 if(isset($_POST['add'])){
     $businessName = $_POST['business-name'];
     $url = $_POST['website'];
-    $address = $_POST['address'] . ' Oxford, MS, 38655';
+    $address = $_POST['address'] . ' Oxford, MS 38655';
     $cuisineId = $_POST['cuisine'];
     $typeList = $_POST['typeList'];
 //     echo $typeList;
