@@ -104,7 +104,7 @@ if (isset($_POST['delete'])) {
                 <form action="allBusinesses.php" method="POST">
                     <div class='input-group d-flex justify-content-center mb-3'>
                         <div id='search-box' class='d-flex flex-row'>
-                            <input type='text' name='restaurantName' class='form-control' placeholder='Search Businesss'>
+                            <input type='text' name='restaurantName' class='form-control' placeholder='Search Business'>
                             <button type='submit' class='btn btn-lg' name='search' id='searcher'>Search</button>
                         </div>
                     </div>    
