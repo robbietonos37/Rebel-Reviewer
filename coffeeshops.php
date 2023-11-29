@@ -11,7 +11,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Coffeeshops</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet">
 </head>
@@ -39,31 +39,10 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         <div class='row d-flex justify-content-center' id='filter-section'>
             <div class='col-md-7'>
                 <form action="coffeeshops.php" method="POST">
-                    <div class='input-group d-flex mb-3'>
-                        <div id='search-box' class='d-flex flex-row'>
+                    <div class='input-group d-flex justify-content-center mb-3'>
+                        <div id='search-box' class='d-flex flex-row justify-content-center'>
                             <input type='text' name='restaurantName' class='form-control' placeholder='Search Coffeeshops'>
                             <button type='submit' class='btn btn-lg' name='search' id='searcher'>Search</button>
-                        </div>
-                        <div id="myDropdown" class="dropdown-content mt-3">
-                            <label>Select a Cuisine</label>
-                            <select name="Cuisine">
-                                <option value="None" selected>
-                                    None Selected
-                                </option>
-                                <?php
-                                    try{
-                                    $query = 'SELECT * FROM Cuisine';
-                                    $statement = $conn->query($query);
-                                    } catch (PDOException $e) {
-                                    echo $e->getMessage();
-                                    }
-                                    while($row = $statement->fetch(PDO::FETCH_ASSOC)){
-                                        echo "<option value=" . $row['cuisineDesc'] . ">"
-                                        . $row['cuisineDesc'] . 
-                                        "</option>";
-                                    }
-                            ?>
-                            </select>
                         </div>
                     </div>    
                 <form>
