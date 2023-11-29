@@ -113,7 +113,7 @@ if (isset($_POST['delete'])) {
         </div>
     </div>
 
-    <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered'>
+    <table id="unapproved-reviews" class='table justify-content-center align-items-center table-bordered mb-5'>
         <tr>
     <td>Business Name</td>
     <td>Address</td>
