@@ -134,7 +134,7 @@ if (isset($_POST['delete'])) {
             $query = 'SELECT reviews.*, businessData.businessName
 FROM reviews
 JOIN businessData ON reviews.businessId = businessData.businessId WHERE reviews.approved = 1
-ORDER BY reviews.date_submitted';
+ORDER BY reviews.reviewId';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
