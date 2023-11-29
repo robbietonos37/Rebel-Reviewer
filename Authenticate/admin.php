@@ -10,7 +10,7 @@ if(!isset($_SESSION['webID'])){
 $webId = $_SESSION['webID'];
 
 if($webId !== 'retonos'){
-    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInHomepage.html");
+    header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
     exit;
 }
 
@@ -27,7 +27,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="stylesAuth.css" rel="stylesheet" >
-    <title>Document</title>
+    <title>Admin</title>
 </head>
 
 <body class="bg-light">
@@ -139,7 +139,7 @@ if (isset($_POST['deny'])) {
             $query = 'SELECT reviews.*, businessData.businessName
 FROM reviews
 JOIN businessData ON reviews.businessId = businessData.businessId WHERE reviews.approved = 0
-ORDER BY reviews.date_submitted';
+ORDER BY reviews.reviewId';
             $stmt = $conn->query($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
