@@ -1,28 +1,36 @@
 <?php
+// returns webId from the Microsoft authentication
 $webId = json_encode($_SERVER["uid"]);
 $webId = str_replace("\"", "", $webId);
 session_start();
+// initializes session variable to that webId
 $_SESSION['webID'] = $webId;
 require_once("/home/retonos/public_html/connect.php");
 
 $conn = Database::connectDB();
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// queries to see if user exists
 $query = "SELECT * FROM Users WHERE webId = :webId";
 $statement = $conn->prepare($query);
 $statement->execute(['webId' => $webId]);
 $row = $statement->fetch(PDO::FETCH_ASSOC);
+// checks to see if user is the admin
 if($row && $row['isAdmin'] == 1){
     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/admin.php");
     exit;
 }
+// checks to see if user is blacklisted and redirects accordingly
 if($row && $row['isBlacklisted'] == 1){
     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/blacklistedPage.php");
     exit;
 }
+// since user is not admin or blacklisted, checks to see if it even exists
 else if($statement->rowCount() > 0){
     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInHomepage.html");    
     exit;
 }
+// redirects to signup since no user has that webId
 else {
     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signUp.php");
     exit;
@@ -37,44 +45,3 @@ print_r($webId);
 
 ?>
 
-<?php
-// session_start();
-// require_once("/home/retonos/public_html/connect.php");
-
-// $conn = Database::connectDB();
-// $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-// $query = "SELECT * FROM users WHERE webId = '$webId'";
-// $statement = $conn->execute($query);
-// if($statement){
-//     echo 'Robbie EXISTS!!';
-// }
-// else {
-//     echo "WE HAVE A PHONEY";
-// }
-?>
-
-<?php
-
-try {
-
-    $query1 = 'select webId from Users where webID = ?';
-    $stmt1 = $conn->prepare($query1);
-    $stmt1->execute([$username]);
-    $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
-
-    if ($row["webID"] === $username) {
-        if ($row1["roleID"] !== 1) {
-            $_SESSION["user"] = $username;
-            redirect("https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/landingpage.php");
-        } else {
-            $_SESSION["admin"] = $username;
-            redirect("https://turing.cs.olemiss.edu/~group1/PHP/admin.php");
-        }
-    } else {
-        redirect("https://turing.cs.olemiss.edu/~retonos/HTML/error.html");
-    }
-
-    Database::dbDisconnect();
-} catch (PDOException $e) {
-    echo $e->getMessage();
-}
