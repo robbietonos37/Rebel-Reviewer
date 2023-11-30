@@ -51,6 +51,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                     None Selected
                                 </option>
                                 <?php
+                                // the dropdown used to filter by cuisine
                                     try{
                                     $query = 'SELECT * FROM Cuisine';
                                     $statement = $conn->query($query);
@@ -77,6 +78,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <div id="all-restaurants">
 
         <?php
+        // queries for all restaurants if no filter is used or search filter is used but empty
         if((!isset($_POST['search']) And !isset($_POST['cuisine-search'])) Or ($_POST['restaurantName'] === '' And !isset($_POST['cuisine-search']))){
             try {
             $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Restaurant" ORDER BY businessName';
@@ -85,6 +87,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo $e->getMessage();
         }
         }
+        // queries for restaurants based on search
         else if(isset($_POST['cuisine-search'])){
             try{
                 $cuisineId = $_POST['cuisineId'];
@@ -101,6 +104,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                     echo "Error executing the query: " . $e->getMessage();
                 }
         }
+        // queries for restaurants based on cuisines
         else {
             try{
             $restaurantName = $_POST['restaurantName'];
@@ -118,7 +122,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } 
          
 
-
+        // renders restaurant data from the restaurants returned from one of the 3 queries above
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
             try {

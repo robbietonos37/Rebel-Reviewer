@@ -39,6 +39,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <div>
 
         <?php
+        // this will render the business info 
         if(isset($_POST['rating-search'])){
             $businessId = $_POST['businessId'];
         try{
@@ -112,6 +113,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     </div>
     <div id="reviews" class='d-flex align-items-center flex-column justify-content-center'>
         <?php
+        // this will render the reviews based on what filter options the user chooses
         if(isset($_POST['rating-search']) && $_POST['rating-order'] !== "None"){
             $businessId = $_POST['businessId'];
             if($_POST['rating-order'] === 'highest-first'){
@@ -136,6 +138,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 }
             }
         }
+        // This will render reviews from newest to oldest since the user has not used the filter
         else{
         try{
             $query = 'SELECT * FROM reviews WHERE businessId = ? AND approved = 1 ORDER BY date_submitted DESC';

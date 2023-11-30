@@ -36,6 +36,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <div>
     <?php
 if (isset($_POST['create'])) {
+    // takes the data from the form and uses it to create an account 
     
     $firstName = $_POST['first-name'];
     $lastName = $_POST['last-name'];
@@ -89,6 +90,7 @@ if (isset($_POST['create'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
+        // this ensures that both emails on the form are the same
         const submitButton = document.querySelector('#register-form');
 
         submitButton.addEventListener('submit', (e) => {

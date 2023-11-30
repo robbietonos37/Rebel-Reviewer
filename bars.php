@@ -51,6 +51,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                     None Selected
                                 </option>
                                 <?php
+                                // This is the dropdown that will allow a user to filter bars by cuisine
                                     try{
                                     $query = 'SELECT * FROM Cuisine';
                                     $statement = $conn->query($query);
@@ -77,6 +78,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     <div id="all-restaurants">
         <?php
+        //if no filters are used or the search filter is blank upon search, this will render all bars
         if((!isset($_POST['search']) And !isset($_POST['cuisine-search'])) Or ($_POST['restaurantName'] === '' And !isset($_POST['cuisine-search']))){
             try {
                 $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Bar" ORDER BY businessName';
@@ -86,6 +88,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
         }
         else if(isset($_POST['cuisine-search'])){
+            // if the user wants to filter by cuisine, this will present the results
             try{
                 $cuisineId = $_POST['cuisineId'];
                 $query = 'SELECT bd.*
@@ -102,6 +105,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 }
         }
         else {
+            // this query will query for bars using the user's search input
             try{
                 $restaurantName = $_POST['restaurantName'];
                 $query = 'SELECT * FROM businessData AS bd 
@@ -117,7 +121,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 }
         }
         
-
+        // this will render the bars returned from one of the 3 queries above
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
             try {

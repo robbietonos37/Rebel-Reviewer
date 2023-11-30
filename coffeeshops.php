@@ -54,6 +54,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     <div id="all-restaurants">
         <?php
+        // will render all coffeeshops since no filter is used or the search is blank
         if(!isset($_POST['search'])  Or $_POST['restaurantName'] === ''){
             try {
                 $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Coffeeshop" ORDER BY businessName';
@@ -62,6 +63,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 echo $e->getMessage();
             }
             }
+            // will render coffeeshops based on search
             else {
                 try{
                 $restaurantName = $_POST['restaurantName'];
@@ -79,7 +81,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
 
         
-
+        // renders the cuisine for each coffeeshop
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
             try {
