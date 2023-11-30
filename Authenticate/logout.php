@@ -1,6 +1,7 @@
 <?php
 session_start(); 
 
+// kills the session and redirects user to homepage
 if (isset($_SESSION['webID'])) {
 
     session_unset();

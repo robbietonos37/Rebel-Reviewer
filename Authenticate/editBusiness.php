@@ -20,27 +20,24 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 <?php
 if(isset($_POST['edit'])){
+    // grabs data submitted from form
     $businessName = $_POST['businessName'];
     $url = $_POST['website'];
     $address = $_POST['address'];
     $cuisineId = $_POST['cuisine'];
     $typeList = $_POST['typeList'];
     $businessId = $_POST['businessId'];
-//     echo $typeList;
 
-// foreach($typeList as $singleType){
-//     echo"<h3>" . $singleType . "</h3>";
-// }
+    // first updates data to that business's existing entry in businessData
     try{
     $query = 'UPDATE businessData SET businessName = ?, address = ?, url = ? WHERE businessId = ?';
     $insertStmt = $conn->prepare($query);
     $result = $insertStmt->execute([$businessName, $address, $url, $businessId]);
-    // if($result){
-    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/addBusiness.php");
-    // }
+
     } catch(PDOException $e){
         echo $e->getMessage();
     }
+    // removes cuisine for the that business
     try {
         $deleteQuery1 = 'DELETE FROM businessCuisines WHERE businessId = ?';
         $deleteStmt1 = $conn->prepare($deleteQuery1);
@@ -50,6 +47,7 @@ if(isset($_POST['edit'])){
         echo $e->getMessage();
     }
 
+    // removes current types for that business 
     try{
         $deleteQuery2 = 'DELETE FROM businessTypes WHERE businessId = ?';
         $deleteStmt2 = $conn->prepare($deleteQuery2);
@@ -59,6 +57,7 @@ if(isset($_POST['edit'])){
         echo $e->getMessage();
     }
 
+    // updates business's cuisine with selected cuisine
     try{
         $query2 = 'INSERT INTO businessCuisines (businessId, cuisineId) VALUES (?, ?)';
         $insertStatement2 = $conn->prepare($query2);
@@ -67,6 +66,7 @@ if(isset($_POST['edit'])){
         echo $e->getMessage();
     }
     
+    // updates business's types with selected types
     foreach($typeList as $singleType){
         try{
             $query3 = 'INSERT INTO businessTypes (businessId, type) VALUES (?, ?)';
@@ -108,6 +108,7 @@ if(isset($_POST['edit'])){
         </ul>
     </nav>
     <?php
+    // queries for and renders all the existing data for that business
     try{
     $query = "SELECT * FROM businessData WHERE businessId = ?";
     $statement = $conn->prepare($query);
@@ -147,6 +148,7 @@ if(isset($_POST['edit'])){
                 <label class="form-label">Choose Primary Cuisine</label>
                 <select class="select" name="cuisine">
                 <?php
+                // grabs cuisine for business so it will be selected already for dropdown
                 try{
                 $query = 'SELECT * FROM Cuisine';
                 $statement = $conn->query($query);
@@ -193,6 +195,7 @@ if(isset($_POST['edit'])){
                 }
                 while($row = $statement3->fetch(PDO::FETCH_ASSOC)){
                     try{
+                        // selects types for selected business so they will already be selected for dropdown
                         $query2 = 'SELECT * FROM businessTypes WHERE businessId = ?';
                         $statement4 = $conn->prepare($query2);
                         $statement4->bindParam(1,$businessId);

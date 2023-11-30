@@ -33,7 +33,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 <body class="bg-light">
 <?php
 if (isset($_POST['approve'])) {
-    
+    // updates approved status of review 
     $reviewId = $_POST['reviewId'];
     $businessId = $_POST['businessId'];
 
@@ -46,7 +46,7 @@ if (isset($_POST['approve'])) {
         echo $e->getMessage();
     }
 
-
+    // recalculates the avg rating for the business of the review
     try{
     $query = 'SELECT * FROM reviews WHERE approved = 1 AND businessId= ?';
     $statement = $conn->prepare($query);
@@ -67,6 +67,7 @@ if (isset($_POST['approve'])) {
     $avgRating = $totalRating / $reviewCount;
     $roundedAvgRating = round($avgRating, 1);
 
+    // updates the business's avg rating with the calculated value
     try {
         $query = "UPDATE businessData SET overAllRating = ? WHERE businessId = ?";
         $statement = $conn->prepare($query);
@@ -74,17 +75,13 @@ if (isset($_POST['approve'])) {
         $statement->bindParam(2, $businessId, PDO::PARAM_INT);
         $result = $statement->execute();
         
-        // if ($result) {
-        //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/signedInRestaurants.php");
-        // } else {
-        //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
-        // }
     } catch (PDOException $e) {
         echo $e->getMessage();
         echo "Query 2 failing.";
     }
 }
 if (isset($_POST['deny'])) {
+    // deletes the review
     
     $reviewId = $_POST['reviewId'];
 
@@ -93,12 +90,6 @@ if (isset($_POST['deny'])) {
     $statement = $conn->prepare($query);
     $statement->bindParam(1,$reviewId);
     $result = $statement->execute();
-    // if($result){
-    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
-    // }
-    // else {
-    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
-    // }
     } catch(PDOException $e){
         echo $e->getMessage();
     }
@@ -135,6 +126,7 @@ if (isset($_POST['deny'])) {
     <td>Deny</td>
 </tr>
     <?php
+    // queries for all of the reviews that have not yet been approved
     try {
             $query = 'SELECT reviews.*, businessData.businessName
 FROM reviews
@@ -180,6 +172,7 @@ ORDER BY reviews.reviewId';
 </html>
 
 <script>
+    // these make the admin confirm before committing to an action
     const approveButtons = document.getElementsByClassName('approve');
     const approveButtonsArray = Array.from(approveButtons);
     approveButtonsArray.forEach((button) => button.addEventListener('click', (e) => {

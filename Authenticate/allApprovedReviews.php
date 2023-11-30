@@ -32,36 +32,30 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 <body class="bg-light">
 <?php
+
 if (isset($_POST['delete'])) {
     $businessId = $_POST['businessId'];
     $reviewId = $_POST['reviewId'];
-
+    // deletes the review from the database
     try{
     $query = 'DELETE FROM reviews WHERE reviewId= ?';
     $statement = $conn->prepare($query);
     $statement->bindParam(1,$reviewId);
     $result = $statement->execute();
-    // if($result){
-    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
-    // }
-    // else {
-    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/index.html");
-    // }
     } catch(PDOException $e){
         echo $e->getMessage();
     }
+    // intitialize variables to recalculate avg rating for affected business
         $reviewCount = 0;
         $totalRating = 0;
         $roundedAvgRating = 0;
 
+        // recalculates avg rating for affected business
     try{
         $query = 'SELECT * FROM reviews WHERE approved = 1 AND businessId= ?';
         $statement = $conn->prepare($query);
         $statement->bindParam(1, $businessId, PDO::PARAM_INT);
-        //$result = $statement->execute();
         if (!$statement->execute()) {
-            // Handle execution failure
-            // Log the error or show an appropriate message
             echo "Query execution failed.";
         } else {
         while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
@@ -71,14 +65,14 @@ if (isset($_POST['delete'])) {
             if ($reviewCount > 0) {
                 $avgRating = $totalRating / $reviewCount;
                 $roundedAvgRating = round($avgRating, 1);
-                // Proceed with the update query here or do necessary actions with $roundedAvgRating
             }
         }
         } catch(PDOException $e){
             echo $e->getMessage();
             echo "Query 1 failing.";
         }
-    
+
+        // Updates overAllRating for affected business
         try {
             $query = "UPDATE businessData SET overAllRating = ? WHERE businessId = ?";
             $statement = $conn->prepare($query);
@@ -86,13 +80,6 @@ if (isset($_POST['delete'])) {
             $statement->bindParam(2, $businessId, PDO::PARAM_INT);
             $result = $statement->execute();
             
-            // if ($result) {
-            //     // Successful update
-            //     echo "Overall rating updated successfully for business with ID: $businessId";
-            // } else {
-            //     // Update failed
-            //     echo "Failed to update overall rating for business with ID: $businessId";
-            // }
         } catch (PDOException $e) {
             echo $e->getMessage();
             echo "Query 2 failing.";
@@ -130,6 +117,7 @@ if (isset($_POST['delete'])) {
     <td>Delete</td>
 </tr>
     <?php
+    // queries for and renders all approved reviews
     try {
             $query = 'SELECT reviews.*, businessData.businessName
 FROM reviews
@@ -174,14 +162,7 @@ ORDER BY reviews.reviewId';
 </html>
 
 <script>
-    const approveButtons = document.getElementsByClassName('approve');
-    const approveButtonsArray = Array.from(approveButtons);
-    approveButtonsArray.forEach((button) => button.addEventListener('click', (e) => {
-        if(!confirm("Are you SURE you want to approve this review? If so it will be live for everyone to see and will affect the business's rating")){
-            e.preventDefault();
-        }
-    }))
-
+    // this ensures the admin double checks before committing to an action
     const denyButtons = document.getElementsByClassName('deny');
     const denyButtonsArray = Array.from(denyButtons);
     denyButtonsArray.forEach((button) => button.addEventListener('click', (e) => {
@@ -189,6 +170,4 @@ ORDER BY reviews.reviewId';
             e.preventDefault();
         }
     }))
-    
-
 </script>

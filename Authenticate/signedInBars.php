@@ -33,11 +33,6 @@ if($row['isBlacklisted'] == 1){
 </head>
 
 <body>
-<?php
-    //echo "This is " .$webId;
-    ?>
-
-
     <nav class="mt-3">
         <ul id="left-items">
             <li><a class="btn fs-5 site-options" href="signedInHomepage.html">Rebel Reviewer</a></li>
@@ -77,6 +72,7 @@ if($row['isBlacklisted'] == 1){
                                     None Selected
                                 </option>
                                 <?php
+                                    // filter used to search for bar by cuisine
                                     try{
                                     $query = 'SELECT * FROM Cuisine';
                                     $statement = $conn->query($query);
@@ -103,6 +99,7 @@ if($row['isBlacklisted'] == 1){
 
     <div id="all-restaurants" class='mb-5'>
     <?php
+    // queries for all bars if no filter is used or search input is blank when used
     if((!isset($_POST['search']) And !isset($_POST['cuisine-search'])) Or ($_POST['restaurantName'] === '' And !isset($_POST['cuisine-search']))) {
             try {
             $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Bar" ORDER BY businessName';
@@ -111,6 +108,7 @@ if($row['isBlacklisted'] == 1){
             echo $e->getMessage();
         }
     }
+    // queries for bars based on cuisine search
     else if(isset($_POST['cuisine-search'])){
         try{
             $cuisineId = $_POST['cuisineId'];
@@ -120,13 +118,12 @@ if($row['isBlacklisted'] == 1){
             JOIN businessCuisines AS bc ON bd.businessId = bc.businessId
             WHERE bt.type = "Bar" AND bc.cuisineId = ?';
             $stmt = $conn->prepare($query);
-            //$stmt->bindParam(1,  "%'" . $restaurantName . "'%");
             $stmt->execute([$cuisineId]);
-            //$result = $stmt->execute();
             } catch (PDOException $e) {
                 echo "Error executing the query: " . $e->getMessage();
             }
     }
+    // querieis for bars based on text search 
     else {
         try{
             $restaurantName = $_POST['restaurantName'];
@@ -135,15 +132,13 @@ if($row['isBlacklisted'] == 1){
             WHERE bd.businessName LIKE ? 
             ORDER BY bd.businessName';
             $stmt = $conn->prepare($query);
-            //$stmt->bindParam(1,  "%'" . $restaurantName . "'%");
             $stmt->execute(["%" . $restaurantName . "%"]);
-            //$result = $stmt->execute();
         } catch (PDOException $e) {
             echo "Error executing the query: " . $e->getMessage();
         }
     }
         
-
+        // renders data returned by one of the 3 queries above
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
             try {

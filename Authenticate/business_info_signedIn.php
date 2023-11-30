@@ -37,7 +37,6 @@ if($row['isBlacklisted'] == 1){
 
 <body>
     <?php
-    //echo "This is " .$webId;
     ?>
     <nav class="mt-3">
         <ul id="left-items">
@@ -59,6 +58,7 @@ if($row['isBlacklisted'] == 1){
     <div class='d-flex align-items-center flex-column justify-content-center'>
 
         <?php
+        // queries for and renders selected business data
         if(isset($_POST['rating-search'])){
             $businessId = $_POST['businessId'];
         try{
@@ -118,7 +118,7 @@ if($row['isBlacklisted'] == 1){
 
     <div class='d-flex justify-content-center'>
     <?php
-    //echo "<span>this is " .$webId. "and"  .$businessId "</span>";
+    // checks if user has already submitted review for business, if not render button to let them
     try{
         $query = "SELECT * FROM reviews WHERE webId = ? AND businessId = ?";
         $statement = $conn->prepare($query);
@@ -153,6 +153,7 @@ if($row['isBlacklisted'] == 1){
     </div>
     <div id="reviews" class='d-flex align-items-center flex-column justify-content-center'>
         <?php
+        // renders all reviews based on whatever filter is used
         if(isset($_POST['rating-search']) && $_POST['rating-order'] !== "None"){
             $businessId = $_POST['businessId'];
             if($_POST['rating-order'] === 'highest-first'){
@@ -177,6 +178,7 @@ if($row['isBlacklisted'] == 1){
                 }
             }
         }
+        // if no filter used render reviews from newest to oldest
         else{
         try{
             $query = 'SELECT * FROM reviews WHERE businessId = ? AND approved = 1 ORDER BY date_submitted DESC';

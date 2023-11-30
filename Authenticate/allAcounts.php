@@ -33,8 +33,7 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 <body class="bg-light">
 <?php
 
-//var_dump($_POST);
-
+// blacklists the selected user 
 if (isset($_POST['deny'])) {
     
     $webIdToBlacklist = $_POST['webId'];
@@ -44,17 +43,12 @@ if (isset($_POST['deny'])) {
     $statement = $conn->prepare($query);
     $statement->bindParam(1,$webIdToBlacklist);
     $result = $statement->execute();
-    // if($result){
-    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
-    // }
-    // else {
-    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInRestaurants.php");
-    // }
     } catch(PDOException $e){
         echo $e->getMessage();
     }
 
 }
+// sets the selected user's status back to not blacklisted
 if (isset($_POST['deny-undo'])) {
     
     $webIdToBlacklist = $_POST['webId'];
@@ -64,12 +58,6 @@ if (isset($_POST['deny-undo'])) {
     $statement = $conn->prepare($query);
     $statement->bindParam(1,$webIdToBlacklist);
     $result = $statement->execute();
-    // if($result){
-    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInBars.php");
-    // }
-    // else {
-    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/signedInRestaurants.php");
-    // }
     } catch(PDOException $e){
         echo $e->getMessage();
     }
@@ -104,6 +92,7 @@ if (isset($_POST['deny-undo'])) {
     <td>Undo Blacklist</td>
 </tr>
     <?php
+    // queries for and renders all accounts that do not belong to the admin
     try {
             $query = 'SELECT * FROM Users WHERE isAdmin = 0';
             $stmt = $conn->query($query);
@@ -150,6 +139,7 @@ if (isset($_POST['deny-undo'])) {
 </html>
 
 <script>
+    // these ensure the admin double checks the action before committing
     const denyButtons = document.getElementsByClassName('deny');
     const denyButtonsArray = Array.from(denyButtons);
     denyButtonsArray.forEach((button) => button.addEventListener('click', (e) => {

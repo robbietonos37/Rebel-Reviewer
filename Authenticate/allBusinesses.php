@@ -34,8 +34,9 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 <?php
 if (isset($_POST['delete'])) {
     
+    
     $businessId = $_POST['businessId'];
-
+    // deletes entry from businessCuisines table associated with selected business
     try {
         $deleteQuery1 = 'DELETE FROM businessCuisines WHERE businessId = ?';
         $deleteStmt1 = $conn->prepare($deleteQuery1);
@@ -45,6 +46,7 @@ if (isset($_POST['delete'])) {
         echo $e->getMessage();
     }
 
+    // deletes entry or entries from businessTypes table associated with selected business
     try{
         $deleteQuery2 = 'DELETE FROM businessTypes WHERE businessId = ?';
         $deleteStmt2 = $conn->prepare($deleteQuery2);
@@ -54,6 +56,7 @@ if (isset($_POST['delete'])) {
         echo $e->getMessage();
     }
 
+    // deletes all reviews associated with selected business
     try{
         $deleteQuery3 = 'DELETE FROM reviews WHERE businessId = ?';
         $deleteStmt3 = $conn->prepare($deleteQuery3);
@@ -63,6 +66,7 @@ if (isset($_POST['delete'])) {
         echo $e->getMessage();
     }
 
+    // deletes all favorite orders associated with selected business
     try{
         $deleteQuery4 = 'DELETE FROM Favorites WHERE businessId = ?';
         $deleteStmt4 = $conn->prepare($deleteQuery4);
@@ -72,6 +76,7 @@ if (isset($_POST['delete'])) {
         echo $e->getMessage();
     }
 
+    // deletes entry from businessData table of selected business
     try{
         $deleteQuery5 = 'DELETE FROM businessData WHERE businessId = ?';
         $deleteStmt5 = $conn->prepare($deleteQuery5);
@@ -121,7 +126,7 @@ if (isset($_POST['delete'])) {
     <td>Edit</td>
 </tr>
     <?php
-    //echo "this is session for webId: " .$webId;
+    // queries for and renders all businesses
     if(!isset($_POST['search'])  Or $_POST['restaurantName'] === ''){
     try {
             $query = 'SELECT * FROM businessData ORDER BY businessName';
@@ -130,6 +135,7 @@ if (isset($_POST['delete'])) {
             echo $e->getMessage();
         }
     }
+    // queries for and renders businesses based on search
     else {
         $restaurantName = $_POST['restaurantName'];
         try {
@@ -170,6 +176,7 @@ if (isset($_POST['delete'])) {
 </html>
 
 <script>
+    // ensures the admin double checks before committing to action
     const denyButtons = document.getElementsByClassName('delete');
     const denyButtonsArray = Array.from(denyButtons);
     denyButtonsArray.forEach((button) => button.addEventListener('click', (e) => {

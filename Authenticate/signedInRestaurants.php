@@ -73,6 +73,7 @@ if($row['isBlacklisted'] == 1){
                                     None Selected
                                 </option>
                                 <?php
+                                // dropdown used to filter by cuisine
                                     try{
                                     $query = 'SELECT * FROM Cuisine';
                                     $statement = $conn->query($query);
@@ -98,6 +99,7 @@ if($row['isBlacklisted'] == 1){
 
     <div id="all-restaurants" class='mb-5'>
         <?php
+        // queries for all restaurants
         if((!isset($_POST['search']) And !isset($_POST['cuisine-search'])) Or ($_POST['restaurantName'] === '' And !isset($_POST['cuisine-search']))){
             try {
                 $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Restaurant" ORDER BY businessName';
@@ -106,6 +108,7 @@ if($row['isBlacklisted'] == 1){
                 echo $e->getMessage();
             }
         }
+        // queries for all restaurants based on cuisine filter
         else if(isset($_POST['cuisine-search'])){
             try{
                 $cuisineId = $_POST['cuisineId'];
@@ -115,13 +118,12 @@ if($row['isBlacklisted'] == 1){
                 JOIN businessCuisines AS bc ON bd.businessId = bc.businessId
                 WHERE bt.type = "Restaurant" AND bc.cuisineId = ?';
                 $stmt = $conn->prepare($query);
-                //$stmt->bindParam(1,  "%'" . $restaurantName . "'%");
                 $stmt->execute([$cuisineId]);
-                //$result = $stmt->execute();
                 } catch (PDOException $e) {
                     echo "Error executing the query: " . $e->getMessage();
                 }
         }
+        // queries for all restaurants based on search filter
         else {
                 try{
                 $restaurantName = $_POST['restaurantName'];
@@ -130,15 +132,13 @@ if($row['isBlacklisted'] == 1){
                 WHERE bd.businessName LIKE ? 
                 ORDER BY bd.businessName';
                 $stmt = $conn->prepare($query);
-                //$stmt->bindParam(1,  "%'" . $restaurantName . "'%");
                 $stmt->execute(["%" . $restaurantName . "%"]);
-                //$result = $stmt->execute();
                 } catch (PDOException $e) {
                     echo "Error executing the query: " . $e->getMessage();
                 }
         } 
          
-
+        // renders data returned from one of the 3 queries above
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
             try {

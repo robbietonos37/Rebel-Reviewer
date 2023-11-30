@@ -34,9 +34,6 @@ if($row['isBlacklisted'] == 1){
 </head>
 
 <body>
-    <?php
-    //echo "This is " .$webId. "'s page";
-    ?>
     <nav class="mt-3">
         <ul id="left-items">
             <li><a class="btn fs-5 site-options" href="signedInHomepage.html">Rebel Reviewer</a></li>
@@ -64,6 +61,7 @@ if($row['isBlacklisted'] == 1){
 </tr>
 
         <?php
+        // Selects and renders all reviews that have been submitted by the user of the current session
         try{
             $query = 'SELECT reviews.*, businessData.businessName
             FROM reviews

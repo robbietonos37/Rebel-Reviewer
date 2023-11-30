@@ -55,12 +55,14 @@ if($checkStatement->rowCount() != 0){
 <?php
 $something = $realBusinessId;
 if(isset($_POST['review'])){
+    // takes data from submitted form
     date_default_timezone_set('America/Chicago');
     $ratingNumber = $_POST['numeric-rating'];
     $reviewText = $_POST['review-text'];
     $businessId = $_POST['businessId'];
     $date = date("Y-m-d");
 
+    // creates new entry in reviews table with submitted data
     try{
     $query = "INSERT INTO reviews (webId, businessId, rating, reviewText, date_submitted, approved) VALUES (?,?,?,?,?,?)";
     $insertStmt = $conn->prepare($query);
@@ -94,6 +96,7 @@ if(isset($_POST['review'])){
     <div>
         <?php 
          try{
+            // lists business name that is being reviewed
             $query = "SELECT * FROM businessData WHERE businessId = ?";
         $statement = $conn->prepare($query);
         $statement->bindParam(1,$businessId);
@@ -118,7 +121,6 @@ if(isset($_POST['review'])){
                 <label>Rating 0.0-5.0</label>
                 <input type="range" min="0" max="5" step="0.1" name="numeric-rating" oninput='rangeValue.innerText = this.value'>
                 <p id="rangeValue">2.5</p>
-                <!-- <input type="number" min="0" max="5" step="0.1" name="numeric-rating" onkeydown="return false"> -->
                 <label>Please tell us about your experience (Limit 250 Characters)</label>
                 <textarea type="textarea" name="review-text" cols="51" rows="7" class='p-1' maxlength="250"></textarea>
                 <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">

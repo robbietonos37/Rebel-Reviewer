@@ -77,6 +77,7 @@ if($row['isBlacklisted'] == 1){
 
     <div id="all-restaurants" class='mb-5'>
         <?php
+        // queries for all coffeeshops
         if(!isset($_POST['search'])  Or $_POST['restaurantName'] === ''){
             try {
                 $query = 'SELECT * FROM businessData AS bd LEFT JOIN businessTypes AS bt ON bt.businessId = bd.businessId WHERE bt.type = "Coffeeshop" ORDER BY businessName';
@@ -85,6 +86,7 @@ if($row['isBlacklisted'] == 1){
                 echo $e->getMessage();
             }
         }
+        // queries for coffeeshops based on search
         else {
             try{
                 $restaurantName = $_POST['restaurantName'];
@@ -93,15 +95,13 @@ if($row['isBlacklisted'] == 1){
                 WHERE bd.businessName LIKE ? 
                 ORDER BY bd.businessName';
                 $stmt = $conn->prepare($query);
-                //$stmt->bindParam(1,  "%'" . $restaurantName . "'%");
                 $stmt->execute(["%" . $restaurantName . "%"]);
-                //$result = $stmt->execute();
             } catch (PDOException $e) {
                 echo "Error executing the query: " . $e->getMessage();
             }
         }
         
-
+        // renders data returned by one of the two queries above
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $businessId = $row['businessId'];
             try {

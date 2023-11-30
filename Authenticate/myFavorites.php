@@ -20,6 +20,7 @@ if($row['isBlacklisted'] == 1){
     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/blacklistedPage.php");
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -34,9 +35,6 @@ if($row['isBlacklisted'] == 1){
 </head>
 
 <body>
-    <?php
-    //echo "This is " .$webId. "'s page";
-    ?>
     <nav class="mt-3">
         <ul id="left-items">
             <li><a class="btn fs-5 site-options" href="signedInHomepage.html">Rebel Reviewer</a></li>
@@ -49,6 +47,7 @@ if($row['isBlacklisted'] == 1){
             <li><a class="btn btn-lg business-options" href="signedInCoffeeshops.php">Coffeeshops</a></li>
         </ul>
         <ul id="right-items">
+        <li><a class="btn btn-lg account-action" href="myReviews.php">My Reviews</a></li>
             <li><a class="btn btn-lg account-action" href="logout.php">Sign Out</a></li>
         </ul>
     </nav>
@@ -60,6 +59,7 @@ if($row['isBlacklisted'] == 1){
 </tr>
 
         <?php
+        // queries for and renders all of the favorites for the user who clicks on this page
         try{
             $query = 'SELECT Favorites.*, businessData.businessName
             FROM Favorites
@@ -82,34 +82,6 @@ if($row['isBlacklisted'] == 1){
         </table>
 
     </div>
-    <?php
-    try {
-             $query = 'SELECT reviews.*, businessData.businessName
-            FROM reviews
-            JOIN businessData ON reviews.businessId = businessData.businessId WHERE
-            reviews.webId = ?
-            ORDER BY reviews.date_submitted';
-        $statement = $conn->prepare($query);
-        $statement->bindParam(1,$webId);
-        $statement->execute();
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-        
-
-        while ($row = $sta->fetch(PDO::FETCH_ASSOC)) {
-            echo "
-            <tr>
-            <td>" . $row['businessName'] . "</td>
-            <td>" . $row['rating'] . "</td>
-            <td>" . htmlspecialchars($row['reviewText'], ENT_QUOTE) . "</td>
-            <td>" . $row['date_submitted'] . "</td>
-            <input type='hidden' name='reviewId' value=" . $row['reviewId'] . ">
-            <input type='hidden' name='businessId' value=" . $row['businessId'] . ">
-        </tr>";
-        }
-
-    ?>
     </table>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>

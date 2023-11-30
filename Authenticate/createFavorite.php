@@ -37,6 +37,7 @@ if($row['isBlacklisted'] == 1){
 
 <body>
 <?php
+// add data from form into the favorites table for signed in user
 $something = $realBusinessId;
 if(isset($_POST['favorite'])){
     $reviewText = $_POST['order-text'];
@@ -74,6 +75,7 @@ if(isset($_POST['favorite'])){
 
     <div>
         <?php 
+        // renders name of business that user is adding favorite order for
          try{
             $query = "SELECT * FROM businessData WHERE businessId = ?";
         $statement = $conn->prepare($query);
@@ -96,7 +98,6 @@ if(isset($_POST['favorite'])){
     <div class='d-flex justify-content-center align-items-center d-column'>
         <form method="POST" action="createFavorite.php">
             <div id='review-box'class='d-flex justify-content-center align-items-center flex-column gap-3 p-5'>
-                <!-- <input type="number" min="0" max="5" step="0.1" name="numeric-rating" onkeydown="return false"> -->
                 <label>Please Enter your Favorite Order</label>
                 <textarea type="textarea" name="order-text" cols="51" rows="7" class='p-1' maxlength="100"></textarea>
                 <input type="hidden" name="businessId" value="<?php echo $businessId; ?>">

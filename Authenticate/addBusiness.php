@@ -18,26 +18,22 @@ $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ?>
 <?php
 if(isset($_POST['add'])){
+    // retrieves the data from the form
     $businessName = $_POST['business-name'];
     $url = $_POST['website'];
     $address = $_POST['address'] . ' Oxford, MS 38655';
     $cuisineId = $_POST['cuisine'];
     $typeList = $_POST['typeList'];
-//     echo $typeList;
 
-// foreach($typeList as $singleType){
-//     echo"<h3>" . $singleType . "</h3>";
-// }
+    // first inserts needed data into businessData table
     try{
     $query = "INSERT INTO businessData (businessName, address, url, overallRating) VALUES (?,?,?,?)";
     $insertStmt = $conn->prepare($query);
     $result = $insertStmt->execute([$businessName, $address, $url, 0]);
-    // if($result){
-    //     header("Location: https://turing.cs.olemiss.edu/~retonos/Rebel-Reviewer/Authenticate/addBusiness.php");
-    // }
     } catch(PDOException $e){
         echo $e->getMessage();
     }
+    // grabs the business data that was just added into the businessData table
     try{
         $query = "SELECT * FROM businessData WHERE businessName = ?";
     $statement = $conn->prepare($query);
@@ -46,6 +42,7 @@ if(isset($_POST['add'])){
     } catch(PDOException $e){
         echo $e->getMessage();
     }
+    // adds cuisine to the business from the form
     while ($row = $statement->fetch()) {
         $businessId = $row['businessId'];
         try{
@@ -55,7 +52,7 @@ if(isset($_POST['add'])){
         } catch(PDOException $e){
             echo $e->getMessage();
         }
-    
+    // adds all the types selected from the form to add to that business 
     foreach($typeList as $singleType){
     try{
         $query3 = 'INSERT INTO businessTypes (businessId, type) VALUES (?, ?)';
@@ -117,6 +114,7 @@ if(isset($_POST['add'])){
                 <label class="form-label">Choose Primary Cuisine</label>
                 <select class="select" name="cuisine">
                 <?php
+                // dropdown select for cuisine for business to be added
                 try{
                 $query = 'SELECT * FROM Cuisine';
                 $statement = $conn->query($query);
@@ -135,6 +133,7 @@ if(isset($_POST['add'])){
             <label class="form-label" for="cuisine">Choose Business Types</label>
                 <select class="form-select" multiple data-mdb-placeholder="Example placeholder" name="typeList[]">
                 <?php
+                // dropdown to add types to business being added
                 try{
                 $query = 'SELECT DISTINCT type FROM businessTypes';
                 $statement = $conn->query($query);
